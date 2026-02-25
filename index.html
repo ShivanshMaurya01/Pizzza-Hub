@@ -1,110 +1,131 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>UrbanSlice Elite</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UrbanSlice Elite</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+scroll-behavior:smooth;
+}
 
 body{
-margin:0;
-font-family:'Segoe UI',sans-serif;
-background:#111;
+background:#0f0f0f;
 color:white;
 }
 
-header{
-background:#000;
-padding:15px 50px;
+/* NAVBAR */
+nav{
+position:fixed;
+width:100%;
+background:rgba(0,0,0,0.9);
 display:flex;
 justify-content:space-between;
 align-items:center;
-position:sticky;
-top:0;
+padding:15px 8%;
 z-index:1000;
-border-bottom:2px solid #d4af37;
+border-bottom:1px solid #222;
 }
 
-.logo{
+nav h1{
 color:#d4af37;
 font-size:24px;
-font-weight:bold;
 }
 
-nav a{
-color:white;
-margin-left:25px;
-text-decoration:none;
+nav ul{
+list-style:none;
+display:flex;
+gap:25px;
+}
+
+nav ul li{
 cursor:pointer;
-font-size:15px;
+transition:0.3s;
 }
 
-nav a:hover{
+nav ul li:hover{
 color:#d4af37;
 }
 
+/* HERO */
 .hero{
-background:url('https://images.unsplash.com/photo-1601924582975-7e3f2b1c9d6f') center/cover;
-height:80vh;
+height:100vh;
+background:url("https://images.unsplash.com/photo-1600891964599-f61ba0e24092") center/cover no-repeat;
 display:flex;
-flex-direction:column;
-justify-content:center;
 align-items:center;
+justify-content:center;
 text-align:center;
+padding:0 20px;
 }
 
-.hero h1{
+.hero-content{
+background:rgba(0,0,0,0.7);
+padding:50px;
+border-radius:15px;
+max-width:800px;
+}
+
+.hero h2{
 font-size:50px;
-margin:0;
+color:#d4af37;
+margin-bottom:20px;
 }
 
 .hero p{
 font-size:18px;
-margin-top:10px;
-}
-
-.section{
-padding:80px 10%;
-}
-
-.section h2{
-text-align:center;
-color:#d4af37;
-margin-bottom:50px;
-font-size:30px;
-}
-
-.categories{
-text-align:center;
 margin-bottom:30px;
 }
 
-.categories button{
-margin:5px;
-padding:10px 18px;
+.hero button{
+padding:12px 30px;
 border:none;
-background:#222;
-color:white;
-cursor:pointer;
-border-radius:20px;
-}
-
-.categories button.active{
 background:#d4af37;
 color:black;
+font-weight:600;
+cursor:pointer;
+border-radius:25px;
+transition:0.3s;
 }
 
-.grid{
+.hero button:hover{
+background:white;
+}
+
+/* SECTION */
+section{
+padding:100px 8%;
+}
+
+section h2{
+text-align:center;
+margin-bottom:50px;
+color:#d4af37;
+font-size:32px;
+}
+
+/* MENU GRID */
+.menu-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:30px;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
 }
 
 .card{
-background:#1c1c1c;
+background:#1a1a1a;
 border-radius:15px;
 overflow:hidden;
 transition:0.3s;
-box-shadow:0 5px 20px rgba(0,0,0,0.6);
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
+display:flex;
+flex-direction:column;
 }
 
 .card:hover{
@@ -113,67 +134,91 @@ transform:translateY(-5px);
 
 .card img{
 width:100%;
-height:220px;
+height:200px;
 object-fit:cover;
 }
 
 .card-content{
 padding:20px;
+flex:1;
+display:flex;
+flex-direction:column;
 }
 
-.card h3{
-margin:0;
+.card-content h3{
+margin-bottom:10px;
+color:#d4af37;
 }
 
-.card p{
+.card-content p{
 font-size:14px;
-color:#ccc;
-margin:10px 0;
+margin-bottom:10px;
+flex:1;
 }
 
 .price{
-color:#d4af37;
-font-weight:bold;
-margin-bottom:10px;
+font-weight:600;
+margin-bottom:15px;
 }
 
-button.add{
+.card button{
+padding:8px;
+border:none;
 background:#d4af37;
 color:black;
-border:none;
-padding:8px 15px;
-border-radius:5px;
 cursor:pointer;
+border-radius:20px;
+font-weight:600;
 }
 
+/* CART */
 .cart{
-position:fixed;
-right:0;
-top:0;
-width:320px;
-height:100%;
-background:#000;
-padding:20px;
-overflow:auto;
-border-left:2px solid #d4af37;
-}
-
-.cart h3{
-color:#d4af37;
+background:#111;
+border-radius:15px;
+padding:30px;
+margin-top:50px;
 }
 
 .cart-item{
-border-bottom:1px solid #333;
-padding:8px 0;
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+font-size:14px;
 }
 
+.cart-total{
+margin-top:20px;
+font-weight:600;
+font-size:18px;
+}
+
+.cart button{
+margin-top:15px;
+width:100%;
+padding:10px;
+background:#d4af37;
+border:none;
+color:black;
+font-weight:600;
+cursor:pointer;
+border-radius:20px;
+}
+
+/* FOOTER */
 footer{
 background:#000;
-text-align:center;
 padding:30px;
-border-top:2px solid #d4af37;
+text-align:center;
+margin-top:50px;
+border-top:1px solid #222;
 }
 
+footer p{
+color:#777;
+font-size:14px;
+}
+
+/* MODAL */
 .modal{
 display:none;
 position:fixed;
@@ -184,162 +229,149 @@ height:100%;
 background:rgba(0,0,0,0.8);
 justify-content:center;
 align-items:center;
+z-index:2000;
 }
 
 .modal-content{
-background:#1c1c1c;
-padding:30px;
-border-radius:10px;
-width:90%;
-max-width:400px;
+background:#1a1a1a;
+padding:40px;
+border-radius:15px;
+text-align:center;
 }
 
-.modal-content input, .modal-content select{
-width:100%;
-padding:10px;
-margin:8px 0;
-border:none;
-border-radius:5px;
+.modal-content h3{
+color:#d4af37;
+margin-bottom:15px;
 }
-
 </style>
 </head>
 <body>
 
-<header>
-<div class="logo">UrbanSlice Elite</div>
 <nav>
-<a onclick="scrollToMenu()">Menu</a>
-<a onclick="openAdmin()">Admin</a>
+<h1>UrbanSlice Elite</h1>
+<ul>
+<li onclick="scrollToSection('home')">Home</li>
+<li onclick="scrollToSection('menu')">Menu</li>
+<li onclick="showAdmin()">Admin</li>
+</ul>
 </nav>
-</header>
 
-<div class="hero">
-<h1>Luxury Pizza Experience</h1>
-<p>Crafted with Passion. Delivered with Excellence.</p>
+<!-- HERO -->
+<div class="hero" id="home">
+<div class="hero-content">
+<h2>Luxury Pizza Experience</h2>
+<p>Premium handcrafted pizzas & refreshing beverages delivered fresh to your doorstep.</p>
+<button onclick="scrollToSection('menu')">Explore Menu</button>
+</div>
 </div>
 
-<div class="section" id="menu">
-<h2>Our Special Menu</h2>
-
-<div class="categories">
-<button class="active" onclick="filterItems('All',this)">All</button>
-<button onclick="filterItems('Veg',this)">Veg</button>
-<button onclick="filterItems('NonVeg',this)">Non-Veg</button>
-<button onclick="filterItems('Drink',this)">Drinks</button>
-</div>
-
-<div class="grid" id="menuGrid"></div>
-</div>
+<!-- MENU -->
+<section id="menu">
+<h2>Our Signature Menu</h2>
+<div class="menu-grid" id="menuItems"></div>
 
 <div class="cart">
-<h3>Your Cart</h3>
+<h2>Your Cart</h2>
 <div id="cartItems"></div>
-<h4>Total: ₹<span id="total">0</span></h4>
-<button class="add" onclick="openCheckout()">Checkout</button>
+<div class="cart-total">Total: ₹<span id="total">0</span></div>
+<button onclick="placeOrder()">Place Order</button>
 </div>
-
-<div class="modal" id="checkoutModal">
-<div class="modal-content">
-<h3>Delivery Details</h3>
-<input type="text" placeholder="Full Name">
-<input type="text" placeholder="Address">
-<select>
-<option>Cash on Delivery</option>
-<option>UPI</option>
-<option>Card</option>
-</select>
-<button class="add" onclick="placeOrder()">Place Order</button>
-</div>
-</div>
+</section>
 
 <footer>
-© 2026 UrbanSlice Elite | Premium Restaurant Website
+<p>© 2026 UrbanSlice Elite | Premium Restaurant Website Project</p>
 </footer>
 
-<script>
+<div class="modal" id="orderModal">
+<div class="modal-content">
+<h3>Order Placed Successfully!</h3>
+<p>Thank you for choosing UrbanSlice Elite.</p>
+</div>
+</div>
 
+<script>
 const items=[
-{name:"Margherita",price:399,type:"Veg",desc:"Classic cheese & tomato delight.",img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092"},
-{name:"Paneer Tikka",price:549,type:"Veg",desc:"Indian spicy paneer fusion pizza.",img:"https://images.unsplash.com/photo-1548365328-9f547fb0953d"},
-{name:"Pepperoni",price:599,type:"NonVeg",desc:"Loaded with premium pepperoni slices.",img:"https://images.unsplash.com/photo-1542281286-9e0a16bb7366"},
-{name:"BBQ Chicken",price:649,type:"NonVeg",desc:"Smoky grilled chicken topping.",img:"https://images.unsplash.com/photo-1603079848235-6a6e99f6f30d"},
-{name:"Veggie Paradise",price:459,type:"Veg",desc:"Fresh farm vegetables & olives.",img:"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e"},
-{name:"Cold Coffee",price:149,type:"Drink",desc:"Creamy iced coffee refreshment.",img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735"},
-{name:"Fresh Lime Soda",price:89,type:"Drink",desc:"Sparkling lemon soda drink.",img:"https://images.unsplash.com/photo-1551024506-0bccd828d307"}
+{name:"Margherita Pizza",price:299,img:"https://images.unsplash.com/photo-1601924928588-75f70e6dc1aa",desc:"Classic cheese & tomato base."},
+{name:"Farmhouse Pizza",price:399,img:"https://images.unsplash.com/photo-1594007654729-407eedc4be65",desc:"Loaded with fresh vegetables."},
+{name:"Pepperoni Pizza",price:449,img:"https://images.unsplash.com/photo-1548365328-9f547fb0953a",desc:"Premium pepperoni slices."},
+{name:"Paneer Tikka Pizza",price:429,img:"https://images.unsplash.com/photo-1595854341625-f33ee10dbf94",desc:"Indian style paneer topping."},
+{name:"BBQ Chicken Pizza",price:499,img:"https://images.unsplash.com/photo-1601924579480-0c1c33d6f5a5",desc:"Smoky barbecue flavor."},
+{name:"Veg Supreme",price:379,img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002",desc:"Loaded with capsicum & olives."},
+{name:"Cheese Burst",price:459,img:"https://images.unsplash.com/photo-1581873372796-635b67ca2008",desc:"Extra cheese filled crust."},
+{name:"Mushroom Delight",price:349,img:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",desc:"Fresh mushroom toppings."},
+{name:"Cold Coffee",price:149,img:"https://images.unsplash.com/photo-1509042239860-f550ce710b93",desc:"Chilled creamy coffee."},
+{name:"Mojito",price:129,img:"https://images.unsplash.com/photo-1582450871972-ab5ca641643d",desc:"Refreshing mint drink."}
 ];
 
 let cart=[];
-let currentFilter="All";
+let revenue=parseInt(localStorage.getItem("revenue"))||0;
 
-function render(){
-let grid=document.getElementById("menuGrid");
-grid.innerHTML="";
+function renderMenu(){
+const container=document.getElementById("menuItems");
+container.innerHTML="";
 items.forEach((item,index)=>{
-if(currentFilter==="All"||item.type===currentFilter){
-grid.innerHTML+=`
+container.innerHTML+=`
 <div class="card">
 <img src="${item.img}">
 <div class="card-content">
 <h3>${item.name}</h3>
 <p>${item.desc}</p>
 <div class="price">₹${item.price}</div>
-<button class="add" onclick="addToCart(${index})">Add to Cart</button>
+<button onclick="addToCart(${index})">Add to Cart</button>
 </div>
 </div>`;
-}
 });
-}
-
-function filterItems(type,btn){
-currentFilter=type;
-document.querySelectorAll(".categories button").forEach(b=>b.classList.remove("active"));
-btn.classList.add("active");
-render();
 }
 
 function addToCart(index){
 cart.push(items[index]);
-updateCart();
+renderCart();
 }
 
-function updateCart(){
+function renderCart(){
+const cartContainer=document.getElementById("cartItems");
+cartContainer.innerHTML="";
 let total=0;
-let html="";
 cart.forEach(item=>{
 total+=item.price;
-html+=`<div class="cart-item">${item.name} - ₹${item.price}</div>`;
+cartContainer.innerHTML+=`
+<div class="cart-item">
+<span>${item.name}</span>
+<span>₹${item.price}</span>
+</div>`;
 });
-document.getElementById("cartItems").innerHTML=html;
 document.getElementById("total").innerText=total;
 }
 
-function openCheckout(){
-document.getElementById("checkoutModal").style.display="flex";
-}
-
 function placeOrder(){
-alert("Order Placed Successfully!");
+if(cart.length===0){
+alert("Cart is empty!");
+return;
+}
+revenue+=parseInt(document.getElementById("total").innerText);
+localStorage.setItem("revenue",revenue);
 cart=[];
-updateCart();
-document.getElementById("checkoutModal").style.display="none";
+renderCart();
+document.getElementById("orderModal").style.display="flex";
+setTimeout(()=>{
+document.getElementById("orderModal").style.display="none";
+},2000);
 }
 
-function scrollToMenu(){
-document.getElementById("menu").scrollIntoView({behavior:"smooth"});
-}
-
-function openAdmin(){
+function showAdmin(){
 let pass=prompt("Enter Admin Password:");
 if(pass==="shivansh@123"){
-alert("Welcome Admin");
+alert("UrbanSlice Admin Panel\n\nTotal Revenue: ₹"+revenue);
 }else{
 alert("Access Denied");
 }
 }
 
-render();
+function scrollToSection(id){
+document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
 
+renderMenu();
 </script>
 
 </body>
