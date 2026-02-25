@@ -1,1 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pizza Palace</title>
 
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #fff5e6;
+    transition: 0.3s;
+}
+
+header {
+    background: #ff6600;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    margin: 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.search-section {
+    text-align: center;
+    margin: 20px;
+}
+
+.search-section input {
+    padding: 10px;
+    width: 250px;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.pizza {
+    background: white;
+    padding: 15px;
+    width: 220px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px gray;
+    transition: 0.3s;
+}
+
+.pizza:hover {
+    transform: scale(1.05);
+}
+
+button {
+    background: #ff6600;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #e65c00;
+}
+
+.cart {
+    background: white;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+input {
+    padding: 8px;
+    margin: 5px;
+}
+
+#bill {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f2f2f2;
+    border-radius: 10px;
+}
+
+.dark {
+    background: #1e1e1e;
+    color: white;
+}
+
+.dark .pizza,
+.dark .cart {
+    background: #333;
+}
+
+.dark #bill {
+    background: #444;
+}
+
+@media(max-width: 768px) {
+    .menu {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🍕 Pizza Palace</h1>
+    <button onclick="toggleDark()">🌙 Dark Mode</button>
+</header>
+
+<section class="search-section">
+    <input type="text" id="search" placeholder="Search Pizza..." onkeyup="searchPizza()">
+</section>
+
+<section class="menu">
+
+    <div class="pizza">
+        <h2>Margherita</h2>
+        <p>₹199</p>
+        <button onclick="addToCart('Margherita',199)">Add to Cart</button>
+    </div>
+
+    <div class="pizza">
+        <h2>Farmhouse</h2>
+        <p>₹299</p>
+        <button onclick="addToCart('Farmhouse',299)">Add to Cart</button>
+    </div>
+
+    <div class="pizza">
+        <h2>Peppy Paneer</h2>
+        <p>₹249</p>
+        <button onclick="addToCart('Peppy Paneer',249)">Add to Cart</button>
+    </div>
+
+</section>
+
+<section class="cart">
+    <h2>🛒 Cart</h2>
+    <div id="cartItems"></div>
+    <h3>Total: ₹<span id="total">0</span></h3>
+
+    <h3>Customer Details</h3>
+    <input type="text" id="customerName" placeholder="Enter Name">
+    <input type="text" id="customerAddress" placeholder="Enter Address">
+    <button onclick="placeOrder()">Place Order</button>
+
+    <div id="bill"></div>
+</section>
+
+<script>
+let cart = [];
+
+function addToCart(name, price) {
+    let item = cart.find(p => p.name === name);
+    if (item) {
+        item.quantity++;
+    } else {
+        cart.push({ name, price, quantity: 1 });
+    }
+    updateCart();
+}
+
+function updateCart() {
+    let cartItems = document.getElementById("cartItems");
+    cartItems.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        total += item.price * item.quantity;
+
+        cartItems.innerHTML += `
+        <div>
+            ${item.name} - ₹${item.price} x ${item.quantity}
+            <button onclick="increase(${index})">+</button>
+            <button onclick="decrease(${index})">-</button>
+            <button onclick="removeItem(${index})">Remove</button>
+        </div>
+        `;
+    });
+
+    document.getElementById("total").innerText = total;
+}
+
+function increase(index) {
+    cart[index].quantity++;
+    updateCart();
+}
+
+function decrease(index) {
+    if (cart[index].quantity > 1) {
+        cart[index].quantity--;
+    }
+    updateCart();
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    updateCart();
+}
+
+function placeOrder() {
+    let name = document.getElementById("customerName").value;
+    let address = document.getElementById("customerAddress").value;
+
+    if (!name || !address) {
+        alert("Please fill all customer details.");
+        return;
+    }
+
+    if (cart.length === 0) {
+        alert("Cart is empty.");
+        return;
+    }
+
+    generateBill(name, address);
+    cart = [];
+    updateCart();
+}
+
+function generateBill(name, address) {
+    let bill = `<h3>🧾 Order Bill</h3>`;
+    bill += `<p>Name: ${name}</p>`;
+    bill += `<p>Address: ${address}</p><hr>`;
+
+    let total = 0;
+
+    cart.forEach(item => {
+        total += item.price * item.quantity;
+        bill += `<p>${item.name} x ${item.quantity} = ₹${item.price * item.quantity}</p>`;
+    });
+
+    bill += `<hr><h4>Total: ₹${total}</h4>`;
+    bill += `<p>Thank you for ordering! 🍕</p>`;
+
+    document.getElementById("bill").innerHTML = bill;
+}
+
+function toggleDark() {
+    document.body.classList.toggle("dark");
+}
+
+function searchPizza() {
+    let input = document.getElementById("search").value.toLowerCase();
+    let pizzas = document.querySelectorAll(".pizza");
+
+    pizzas.forEach(pizza => {
+        let name = pizza.querySelector("h2").innerText.toLowerCase();
+        pizza.style.display = name.includes(input) ? "block" : "none";
+    });
+}
+</script>
+
+</body>
+</html>
