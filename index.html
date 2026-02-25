@@ -1,371 +1,344 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<title>UrbanSlice Elite</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PizzaHub Ultra</title>
-
 <style>
-:root{
---bg:linear-gradient(135deg,#0f0f14,#1c1c25);
---glass:rgba(255,255,255,0.06);
---gold:#d4af37;
---text:#f5f5f5;
-}
 
 body{
 margin:0;
-font-family:Segoe UI,sans-serif;
-background:var(--bg);
-color:var(--text);
+font-family:'Segoe UI',sans-serif;
+background:#111;
+color:white;
 }
 
-nav{
-background:var(--glass);
-backdrop-filter:blur(10px);
-padding:15px 30px;
+header{
+background:#000;
+padding:15px 50px;
 display:flex;
 justify-content:space-between;
 align-items:center;
 position:sticky;
 top:0;
+z-index:1000;
+border-bottom:2px solid #d4af37;
 }
 
-nav h2{color:var(--gold);margin:0;}
+.logo{
+color:#d4af37;
+font-size:24px;
+font-weight:bold;
+}
 
 nav a{
-margin-left:20px;
+color:white;
+margin-left:25px;
+text-decoration:none;
 cursor:pointer;
+font-size:15px;
 }
 
-nav a:hover{color:var(--gold);}
+nav a:hover{
+color:#d4af37;
+}
+
+.hero{
+background:url('https://images.unsplash.com/photo-1601924582975-7e3f2b1c9d6f') center/cover;
+height:80vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.hero h1{
+font-size:50px;
+margin:0;
+}
+
+.hero p{
+font-size:18px;
+margin-top:10px;
+}
 
 .section{
-display:none;
-padding:40px;
+padding:80px 10%;
 }
 
-.active{display:block;}
+.section h2{
+text-align:center;
+color:#d4af37;
+margin-bottom:50px;
+font-size:30px;
+}
+
+.categories{
+text-align:center;
+margin-bottom:30px;
+}
+
+.categories button{
+margin:5px;
+padding:10px 18px;
+border:none;
+background:#222;
+color:white;
+cursor:pointer;
+border-radius:20px;
+}
+
+.categories button.active{
+background:#d4af37;
+color:black;
+}
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:30px;
 }
 
 .card{
-background:var(--glass);
-padding:15px;
+background:#1c1c1c;
 border-radius:15px;
+overflow:hidden;
 transition:0.3s;
+box-shadow:0 5px 20px rgba(0,0,0,0.6);
 }
 
-.card:hover{transform:scale(1.03);}
+.card:hover{
+transform:translateY(-5px);
+}
 
-img{
+.card img{
 width:100%;
-height:180px;
+height:220px;
 object-fit:cover;
-border-radius:10px;
 }
 
-button{
-background:var(--gold);
-border:none;
-padding:6px 12px;
-cursor:pointer;
-margin-top:5px;
-}
-
-button:hover{transform:scale(1.05);}
-
-#cartCount{
-background:red;
-padding:3px 7px;
-border-radius:50%;
-font-size:12px;
-}
-
-.modal{
-position:fixed;
-top:0;left:0;
-width:100%;height:100vh;
-background:rgba(0,0,0,0.8);
-display:none;
-align-items:center;
-justify-content:center;
-}
-
-.modal-content{
-background:#1e1e28;
+.card-content{
 padding:20px;
-border-radius:10px;
-width:300px;
+}
+
+.card h3{
+margin:0;
+}
+
+.card p{
+font-size:14px;
+color:#ccc;
+margin:10px 0;
+}
+
+.price{
+color:#d4af37;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+button.add{
+background:#d4af37;
+color:black;
+border:none;
+padding:8px 15px;
+border-radius:5px;
+cursor:pointer;
+}
+
+.cart{
+position:fixed;
+right:0;
+top:0;
+width:320px;
+height:100%;
+background:#000;
+padding:20px;
+overflow:auto;
+border-left:2px solid #d4af37;
+}
+
+.cart h3{
+color:#d4af37;
+}
+
+.cart-item{
+border-bottom:1px solid #333;
+padding:8px 0;
 }
 
 footer{
+background:#000;
 text-align:center;
-padding:20px;
-background:#111;
-margin-top:30px;
+padding:30px;
+border-top:2px solid #d4af37;
 }
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+justify-content:center;
+align-items:center;
+}
+
+.modal-content{
+background:#1c1c1c;
+padding:30px;
+border-radius:10px;
+width:90%;
+max-width:400px;
+}
+
+.modal-content input, .modal-content select{
+width:100%;
+padding:10px;
+margin:8px 0;
+border:none;
+border-radius:5px;
+}
+
 </style>
 </head>
-
 <body>
 
+<header>
+<div class="logo">UrbanSlice Elite</div>
 <nav>
-<h2>PizzaHub Ultra</h2>
-<div>
-<a onclick="show('home')">Home</a>
-<a onclick="show('menu')">Menu</a>
-<a onclick="show('cart')">Cart <span id="cartCount">0</span></a>
-<a onclick="show('orders')">Orders</a>
-<a onclick="showAdmin()">Admin</a>
-</div>
+<a onclick="scrollToMenu()">Menu</a>
+<a onclick="openAdmin()">Admin</a>
 </nav>
+</header>
 
-<div id="home" class="section active">
-<h1>Welcome to PizzaHub Ultra</h1>
-<p>Your one-stop destination for premium pizzas and refreshing drinks.</p>
-<p>Order online and enjoy fast delivery at your doorstep.</p>
+<div class="hero">
+<h1>Luxury Pizza Experience</h1>
+<p>Crafted with Passion. Delivered with Excellence.</p>
 </div>
 
-<div id="menu" class="section">
-<h2>Menu</h2>
-<div id="menuList" class="grid"></div>
+<div class="section" id="menu">
+<h2>Our Special Menu</h2>
+
+<div class="categories">
+<button class="active" onclick="filterItems('All',this)">All</button>
+<button onclick="filterItems('Veg',this)">Veg</button>
+<button onclick="filterItems('NonVeg',this)">Non-Veg</button>
+<button onclick="filterItems('Drink',this)">Drinks</button>
 </div>
 
-<div id="cart" class="section">
-<h2>Your Cart</h2>
+<div class="grid" id="menuGrid"></div>
+</div>
+
+<div class="cart">
+<h3>Your Cart</h3>
 <div id="cartItems"></div>
-<h3>Total ₹<span id="cartTotal">0</span></h3>
-<button onclick="openPayment()">Proceed to Payment</button>
+<h4>Total: ₹<span id="total">0</span></h4>
+<button class="add" onclick="openCheckout()">Checkout</button>
 </div>
 
-<div id="orders" class="section">
-<h2>Order History</h2>
-<div id="orderList"></div>
-</div>
-
-<div id="admin" class="section">
-<h2>Admin Dashboard</h2>
-<p>Total Revenue: ₹<span id="revenue">0</span></p>
-<canvas id="chart" width="400" height="200"></canvas>
-</div>
-
-<div class="modal" id="paymentModal">
+<div class="modal" id="checkoutModal">
 <div class="modal-content">
-<h3>Payment Gateway</h3>
-<input id="cardInput" placeholder="Enter Card Number" style="width:100%;padding:5px"><br><br>
-<button onclick="confirmPayment()">Pay Now</button>
-<button onclick="closePayment()">Cancel</button>
+<h3>Delivery Details</h3>
+<input type="text" placeholder="Full Name">
+<input type="text" placeholder="Address">
+<select>
+<option>Cash on Delivery</option>
+<option>UPI</option>
+<option>Card</option>
+</select>
+<button class="add" onclick="placeOrder()">Place Order</button>
 </div>
 </div>
 
 <footer>
-© 2026 PizzaHub Ultra | Developed using HTML, CSS & JavaScript
+© 2026 UrbanSlice Elite | Premium Restaurant Website
 </footer>
 
 <script>
 
-// ================= DATA =================
-
-let pizzas=[
-{id:1,name:"Truffle Margherita",price:399,desc:"Classic Italian pizza with basil.",img:"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80"},
-{id:2,name:"Pepperoni Supreme",price:499,desc:"Loaded with pepperoni & cheese.",img:"https://images.unsplash.com/photo-1601924582975-7aa6b4f6b5f1?auto=format&fit=crop&w=800&q=80"},
-{id:3,name:"Farmhouse Delight",price:449,desc:"Fresh vegetables & mozzarella.",img:"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=80"},
-{id:4,name:"BBQ Chicken",price:549,desc:"Smoky BBQ chicken topping.",img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80"},
-{id:5,name:"Four Cheese",price:529,desc:"Mozzarella, cheddar & parmesan.",img:"https://images.unsplash.com/photo-1548365328-9f547fb0953a?auto=format&fit=crop&w=800&q=80"},
-{id:6,name:"Mexican Wave",price:469,desc:"Spicy jalapeno & olives.",img:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80"},
-{id:7,name:"Paneer Tikka",price:459,desc:"Indian style paneer topping.",img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80"},
-{id:8,name:"Cheese Burst",price:579,desc:"Extra cheese stuffed crust.",img:"https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=800&q=80"},
-{id:9,name:"Spicy Italian",price:519,desc:"Italian herbs & salami.",img:"https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?auto=format&fit=crop&w=800&q=80"},
-{id:10,name:"Veggie Paradise",price:429,desc:"Garden fresh vegetables.",img:"https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&w=800&q=80"}
+const items=[
+{name:"Margherita",price:399,type:"Veg",desc:"Classic cheese & tomato delight.",img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092"},
+{name:"Paneer Tikka",price:549,type:"Veg",desc:"Indian spicy paneer fusion pizza.",img:"https://images.unsplash.com/photo-1548365328-9f547fb0953d"},
+{name:"Pepperoni",price:599,type:"NonVeg",desc:"Loaded with premium pepperoni slices.",img:"https://images.unsplash.com/photo-1542281286-9e0a16bb7366"},
+{name:"BBQ Chicken",price:649,type:"NonVeg",desc:"Smoky grilled chicken topping.",img:"https://images.unsplash.com/photo-1603079848235-6a6e99f6f30d"},
+{name:"Veggie Paradise",price:459,type:"Veg",desc:"Fresh farm vegetables & olives.",img:"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e"},
+{name:"Cold Coffee",price:149,type:"Drink",desc:"Creamy iced coffee refreshment.",img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735"},
+{name:"Fresh Lime Soda",price:89,type:"Drink",desc:"Sparkling lemon soda drink.",img:"https://images.unsplash.com/photo-1551024506-0bccd828d307"}
 ];
 
-let drinks=[
-{id:101,name:"Coca Cola",price:99,desc:"Refreshing cold drink.",img:"https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=800&q=80"},
-{id:102,name:"Pepsi",price:99,desc:"Classic soft drink.",img:"https://images.unsplash.com/photo-1622483767028-3f66f32aefdb?auto=format&fit=crop&w=800&q=80"},
-{id:103,name:"Orange Juice",price:129,desc:"Fresh orange juice.",img:"https://images.unsplash.com/photo-1571689936114-b7e1f6c7b5c3?auto=format&fit=crop&w=800&q=80"},
-{id:104,name:"Cold Coffee",price:149,desc:"Iced coffee with cream.",img:"https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80"},
-{id:105,name:"Mineral Water",price:49,desc:"Pure bottled water.",img:"https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=800&q=80"}
-];
+let cart=[];
+let currentFilter="All";
 
-let cart=JSON.parse(localStorage.getItem("cart"))||[];
-let orders=JSON.parse(localStorage.getItem("orders"))||[];
-
-// ================= NAVIGATION =================
-
-function show(id){
-document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-}
-
-// ================= ADMIN LOGIN =================
-
-function showAdmin(){
-let pass=prompt("Enter Admin Password:");
-if(pass==="admin123"){show("admin");updateRevenue();}
-else alert("Access Denied");
-}
-
-// ================= LOAD MENU =================
-
-function loadMenu(){
-let container=document.getElementById("menuList");
-container.innerHTML="<h2 style='grid-column:1/-1;'>Pizzas</h2>";
-
-pizzas.forEach(item=>{
-container.innerHTML+=`
+function render(){
+let grid=document.getElementById("menuGrid");
+grid.innerHTML="";
+items.forEach((item,index)=>{
+if(currentFilter==="All"||item.type===currentFilter){
+grid.innerHTML+=`
 <div class="card">
 <img src="${item.img}">
+<div class="card-content">
 <h3>${item.name}</h3>
 <p>${item.desc}</p>
-<p><b>₹${item.price}</b></p>
-<button onclick="addCart(${item.id})">Add to Cart</button>
+<div class="price">₹${item.price}</div>
+<button class="add" onclick="addToCart(${index})">Add to Cart</button>
+</div>
 </div>`;
-});
-
-container.innerHTML+="<h2 style='grid-column:1/-1;margin-top:20px;'>Drinks</h2>";
-
-drinks.forEach(item=>{
-container.innerHTML+=`
-<div class="card">
-<img src="${item.img}">
-<h3>${item.name}</h3>
-<p>${item.desc}</p>
-<p><b>₹${item.price}</b></p>
-<button onclick="addCart(${item.id})">Add to Cart</button>
-</div>`;
+}
 });
 }
 
-// ================= CART =================
+function filterItems(type,btn){
+currentFilter=type;
+document.querySelectorAll(".categories button").forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
+render();
+}
 
-function addCart(id){
-let item=[...pizzas,...drinks].find(p=>p.id==id);
-let existing=cart.find(c=>c.id==id);
-
-if(existing){existing.qty++;}
-else{cart.push({...item,qty:1});}
-
-saveCart();
+function addToCart(index){
+cart.push(items[index]);
+updateCart();
 }
 
 function updateCart(){
-let container=document.getElementById("cartItems");
-container.innerHTML="";
 let total=0;
-let count=0;
-
-cart.forEach((c,i)=>{
-total+=c.price*c.qty;
-count+=c.qty;
-
-container.innerHTML+=`
-<div class="card">
-${c.name} (x${c.qty}) - ₹${c.price*c.qty}
-<br>
-<button onclick="changeQty(${i},1)">+</button>
-<button onclick="changeQty(${i},-1)">-</button>
-<button onclick="removeItem(${i})">Remove</button>
-</div>`;
+let html="";
+cart.forEach(item=>{
+total+=item.price;
+html+=`<div class="cart-item">${item.name} - ₹${item.price}</div>`;
 });
-
-document.getElementById("cartTotal").innerText=total;
-document.getElementById("cartCount").innerText=count;
+document.getElementById("cartItems").innerHTML=html;
+document.getElementById("total").innerText=total;
 }
 
-function changeQty(i,val){
-cart[i].qty+=val;
-if(cart[i].qty<=0) cart.splice(i,1);
-saveCart();
+function openCheckout(){
+document.getElementById("checkoutModal").style.display="flex";
 }
 
-function removeItem(i){
-cart.splice(i,1);
-saveCart();
-}
-
-function saveCart(){
-localStorage.setItem("cart",JSON.stringify(cart));
-updateCart();
-}
-
-// ================= PAYMENT =================
-
-function openPayment(){
-if(cart.length==0){alert("Cart Empty");return;}
-document.getElementById("paymentModal").style.display="flex";
-}
-
-function closePayment(){
-document.getElementById("paymentModal").style.display="none";
-}
-
-function confirmPayment(){
-let card=document.getElementById("cardInput").value;
-
-if(card.length<8){
-alert("Enter valid card number");
-return;
-}
-
-let total=+document.getElementById("cartTotal").innerText;
-
-orders.push({id:Date.now(),total:total});
-localStorage.setItem("orders",JSON.stringify(orders));
-
+function placeOrder(){
+alert("Order Placed Successfully!");
 cart=[];
-saveCart();
-closePayment();
-loadOrders();
-updateRevenue();
-
-alert("Payment Successful!");
-}
-
-// ================= ORDERS =================
-
-function loadOrders(){
-let container=document.getElementById("orderList");
-container.innerHTML="";
-
-orders.forEach(o=>{
-container.innerHTML+=`
-<div class="card">
-Order ID: ${o.id}<br>
-Total: ₹${o.total}
-</div>`;
-});
-}
-
-// ================= ADMIN REVENUE =================
-
-function updateRevenue(){
-let revenue=0;
-orders.forEach(o=>revenue+=o.total);
-document.getElementById("revenue").innerText=revenue;
-drawChart();
-}
-
-function drawChart(){
-let canvas=document.getElementById("chart");
-let ctx=canvas.getContext("2d");
-ctx.clearRect(0,0,400,200);
-
-orders.forEach((o,i)=>{
-ctx.fillStyle="#d4af37";
-ctx.fillRect(i*40+20,200-o.total/5,25,o.total/5);
-});
-}
-
-// ================= INIT =================
-
-loadMenu();
 updateCart();
-loadOrders();
+document.getElementById("checkoutModal").style.display="none";
+}
+
+function scrollToMenu(){
+document.getElementById("menu").scrollIntoView({behavior:"smooth"});
+}
+
+function openAdmin(){
+let pass=prompt("Enter Admin Password:");
+if(pass==="shivansh@123"){
+alert("Welcome Admin");
+}else{
+alert("Access Denied");
+}
+}
+
+render();
 
 </script>
 
