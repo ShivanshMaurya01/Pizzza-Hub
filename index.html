@@ -225,20 +225,32 @@ align-items:center;
 flex-direction:column;
 }
 
-/* ORDER TRACKING */
-#trackingScreen{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#111;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-}
+// ================= ORDER TRACKING FIX =================
+function trackOrder(orderId) {
+    document.getElementById("trackingScreen").classList.remove("hidden");
+    let statusEl = document.getElementById("trackingStatus");
 
+    // Find order object
+    let order = orders.find(o => o.id === orderId);
+    if(!order) return;
+
+    let statuses = ["Preparing","Baking","Out for Delivery","Delivered"];
+    let current = 0;
+
+    // Update status every 2 seconds
+    let interval = setInterval(()=>{
+        if(current >= statuses.length) {
+            clearInterval(interval);
+            order.status = statuses[statuses.length-1]; // mark as Delivered
+            updateOrdersTable(); // update admin table
+            return;
+        }
+        order.status = statuses[current];
+        statusEl.innerText = `Order ${orderId}: ${statuses[current]}`;
+        updateOrdersTable(); // update admin table in real-time
+        current++;
+    }, 2000);
+}
 /* ADMIN DASHBOARD */
 #adminDashboard{
 position:fixed;
