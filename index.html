@@ -292,3 +292,259 @@ margin-top:30px;
 </style>
 </head>
 <body>
+<!-- ================= AUTH SECTION ================= -->
+
+<div id="loginPage" class="auth-container">
+  <div class="auth-box">
+    <h2>User Login</h2>
+    <input type="text" id="loginUsername" placeholder="Username">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p onclick="showRegister()">Don't have account? Register</p>
+    <p onclick="showAdminLogin()">Admin Login</p>
+  </div>
+</div>
+
+<div id="registerPage" class="auth-container hidden">
+  <div class="auth-box">
+    <h2>Create Account</h2>
+    <input type="text" id="registerUsername" placeholder="Username">
+    <input type="password" id="registerPassword" placeholder="Password">
+    <button onclick="register()">Register</button>
+    <p onclick="showLogin()">Already have account? Login</p>
+  </div>
+</div>
+
+<div id="adminLoginPage" class="auth-container hidden">
+  <div class="auth-box">
+    <h2>Admin Login</h2>
+    <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+    <button onclick="adminLogin()">Login</button>
+    <p onclick="showLogin()">Back to User Login</p>
+  </div>
+</div>
+
+<!-- ================= MAIN APP ================= -->
+
+<div id="app" class="hidden">
+
+<nav>
+  <h1>UrbanSlice Ultimate</h1>
+  <ul>
+    <li onclick="logout()">Logout</li>
+    <li onclick="toggleCart()">Cart</li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-box">
+    <h2>Luxury Pizza Experience</h2>
+    <p>Premium taste. Premium lifestyle.</p>
+  </div>
+</div>
+
+<section>
+  <h2>Our Menu</h2>
+  <div class="menu-grid" id="menuContainer"></div>
+</section>
+
+</div>
+
+<!-- ================= CART PANEL ================= -->
+
+<div class="cart-panel" id="cartPanel">
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+  <h3>Total: ₹<span id="cartTotal">0</span></h3>
+  <button onclick="proceedToPayment()">Proceed to Payment</button>
+</div>
+
+<!-- ================= PAYMENT SCREEN ================= -->
+
+<div id="paymentScreen" class="hidden">
+  <h2>Payment Gateway</h2>
+  <p>Total Amount: ₹<span id="paymentAmount"></span></p>
+  <button onclick="completePayment()">Pay Now</button>
+  <br><br>
+  <button onclick="cancelPayment()">Cancel</button>
+</div>
+
+<!-- ================= ORDER TRACKING ================= -->
+
+<div id="trackingScreen" class="hidden">
+  <h2>Order Tracking</h2>
+  <p id="trackingStatus">Preparing your order...</p>
+  <br>
+  <button onclick="closeTracking()">Close</button>
+</div>
+
+<!-- ================= ADMIN DASHBOARD ================= -->
+
+<div id="adminDashboard" class="hidden">
+
+<div class="admin-header">
+  <h1>Admin Dashboard</h1>
+  <button onclick="closeAdmin()">Logout</button>
+</div>
+
+<div class="stats">
+  <div class="stat-box">
+    <h3>Total Users</h3>
+    <p id="totalUsers">0</p>
+  </div>
+  <div class="stat-box">
+    <h3>Total Orders</h3>
+    <p id="totalOrders">0</p>
+  </div>
+  <div class="stat-box">
+    <h3>Total Revenue</h3>
+    <p>₹<span id="totalRevenue">0</span></p>
+  </div>
+</div>
+
+<h2>Orders Database</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>User</th>
+      <th>Amount</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="ordersTable"></tbody>
+</table>
+
+<h2>Revenue Chart</h2>
+<canvas id="revenueChart" width="800" height="300"></canvas>
+
+</div>
+
+<!-- ================= AUTH SECTION ================= -->
+
+<div id="loginPage" class="auth-container">
+  <div class="auth-box">
+    <h2>User Login</h2>
+    <input type="text" id="loginUsername" placeholder="Username">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p onclick="showRegister()">Don't have account? Register</p>
+    <p onclick="showAdminLogin()">Admin Login</p>
+  </div>
+</div>
+
+<div id="registerPage" class="auth-container hidden">
+  <div class="auth-box">
+    <h2>Create Account</h2>
+    <input type="text" id="registerUsername" placeholder="Username">
+    <input type="password" id="registerPassword" placeholder="Password">
+    <button onclick="register()">Register</button>
+    <p onclick="showLogin()">Already have account? Login</p>
+  </div>
+</div>
+
+<div id="adminLoginPage" class="auth-container hidden">
+  <div class="auth-box">
+    <h2>Admin Login</h2>
+    <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+    <button onclick="adminLogin()">Login</button>
+    <p onclick="showLogin()">Back to User Login</p>
+  </div>
+</div>
+
+<!-- ================= MAIN APP ================= -->
+
+<div id="app" class="hidden">
+
+<nav>
+  <h1>UrbanSlice Ultimate</h1>
+  <ul>
+    <li onclick="logout()">Logout</li>
+    <li onclick="toggleCart()">Cart</li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-box">
+    <h2>Luxury Pizza Experience</h2>
+    <p>Premium taste. Premium lifestyle.</p>
+  </div>
+</div>
+
+<section>
+  <h2>Our Menu</h2>
+  <div class="menu-grid" id="menuContainer"></div>
+</section>
+
+</div>
+
+<!-- ================= CART PANEL ================= -->
+
+<div class="cart-panel" id="cartPanel">
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+  <h3>Total: ₹<span id="cartTotal">0</span></h3>
+  <button onclick="proceedToPayment()">Proceed to Payment</button>
+</div>
+
+<!-- ================= PAYMENT SCREEN ================= -->
+
+<div id="paymentScreen" class="hidden">
+  <h2>Payment Gateway</h2>
+  <p>Total Amount: ₹<span id="paymentAmount"></span></p>
+  <button onclick="completePayment()">Pay Now</button>
+  <br><br>
+  <button onclick="cancelPayment()">Cancel</button>
+</div>
+
+<!-- ================= ORDER TRACKING ================= -->
+
+<div id="trackingScreen" class="hidden">
+  <h2>Order Tracking</h2>
+  <p id="trackingStatus">Preparing your order...</p>
+  <br>
+  <button onclick="closeTracking()">Close</button>
+</div>
+
+<!-- ================= ADMIN DASHBOARD ================= -->
+
+<div id="adminDashboard" class="hidden">
+
+<div class="admin-header">
+  <h1>Admin Dashboard</h1>
+  <button onclick="closeAdmin()">Logout</button>
+</div>
+
+<div class="stats">
+  <div class="stat-box">
+    <h3>Total Users</h3>
+    <p id="totalUsers">0</p>
+  </div>
+  <div class="stat-box">
+    <h3>Total Orders</h3>
+    <p id="totalOrders">0</p>
+  </div>
+  <div class="stat-box">
+    <h3>Total Revenue</h3>
+    <p>₹<span id="totalRevenue">0</span></p>
+  </div>
+</div>
+
+<h2>Orders Database</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>User</th>
+      <th>Amount</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="ordersTable"></tbody>
+</table>
+
+<h2>Revenue Chart</h2>
+<canvas id="revenueChart" width="800" height="300"></canvas>
+
+</div>
+
