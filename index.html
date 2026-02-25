@@ -1,334 +1,386 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>PizzaHub Pro</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PizzaHub Ultra</title>
 
 <style>
-body{
-margin:0;
-font-family:Arial, sans-serif;
-background:#f5f5f5;
-transition:.3s;
+
+/* ================== PREMIUM DESIGN SYSTEM ================== */
+
+:root{
+--bg:linear-gradient(135deg,#0f0f14,#1c1c25);
+--glass:rgba(255,255,255,0.05);
+--gold:#d4af37;
+--text:#f5f5f5;
 }
 
-header{
-background:#e23744;
-color:white;
-padding:15px;
+body{
+margin:0;
+font-family:Segoe UI, sans-serif;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+}
+
+/* ================== LOADER ================== */
+
+#loader{
+position:fixed;
+width:100%;
+height:100vh;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+font-size:28px;
+color:var(--gold);
+animation:fadeOut 2s forwards 2s;
+}
+
+@keyframes fadeOut{
+to{opacity:0;visibility:hidden;}
+}
+
+/* ================== NAV ================== */
+
+nav{
+backdrop-filter:blur(10px);
+background:var(--glass);
+padding:15px 40px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+position:sticky;
+top:0;
+z-index:1000;
 }
 
-nav button{
-margin-left:10px;
-padding:8px 12px;
-border:none;
-background:white;
-color:#e23744;
-font-weight:bold;
+nav h2{color:var(--gold);}
+
+nav a{
+margin-left:20px;
 cursor:pointer;
-border-radius:5px;
+transition:0.3s;
 }
+
+nav a:hover{color:var(--gold);}
+
+/* ================== SECTIONS ================== */
 
 .section{
 display:none;
-padding:20px;
+padding:40px 60px;
+animation:fadeIn 0.5s ease;
 }
 
-.active{
-display:block;
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(10px);}
+to{opacity:1;transform:translateY(0);}
 }
+
+.active{display:block;}
+
+/* ================== CARDS ================== */
 
 .card{
-background:white;
-padding:15px;
-margin:10px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,.1);
+background:var(--glass);
+backdrop-filter:blur(15px);
+padding:20px;
+border-radius:15px;
+margin:15px 0;
+transition:0.3s;
 }
 
-button.primary{
-background:#e23744;
-color:white;
+.card:hover{
+transform:translateY(-5px) scale(1.02);
+}
+
+/* ================== BUTTON ================== */
+
+button{
+background:var(--gold);
 border:none;
-padding:8px 12px;
-border-radius:5px;
+padding:8px 14px;
 cursor:pointer;
+font-weight:bold;
+transition:0.3s;
 }
 
-button.primary:hover{
-opacity:.8;
+button:hover{transform:scale(1.05);}
+
+/* ================== GRID ================== */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
 }
 
-input, select{
-padding:8px;
-margin:5px 0;
+img{
 width:100%;
+border-radius:12px;
 }
 
-.flex{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-}
+/* ================== TOAST ================== */
 
-.toast{
+#toast{
 position:fixed;
 bottom:20px;
 right:20px;
-background:#333;
-color:white;
-padding:10px 15px;
-border-radius:5px;
+background:#111;
+padding:15px;
+border-left:4px solid var(--gold);
 display:none;
 }
 
-.dark{
-background:#121212;
-color:white;
+/* ================== MODAL ================== */
+
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:rgba(0,0,0,0.8);
+display:none;
+align-items:center;
+justify-content:center;
 }
 
-.dark .card{
-background:#1e1e1e;
+.modal-content{
+background:#1e1e28;
+padding:30px;
+border-radius:15px;
+width:300px;
 }
+
+/* ================== PROGRESS ================== */
 
 .progress{
 height:10px;
-background:#ddd;
-border-radius:5px;
-overflow:hidden;
-margin:10px 0;
+background:#333;
+margin-top:10px;
+border-radius:10px;
 }
 
-.progress-bar{
+.progress div{
 height:10px;
-width:0%;
-background:#e23744;
+width:0;
+background:var(--gold);
+border-radius:10px;
 transition:1s;
 }
+
+/* ================== CART BADGE ================== */
+
+#cartCount{
+background:red;
+padding:3px 7px;
+border-radius:50%;
+font-size:12px;
+margin-left:5px;
+}
+
+canvas{
+background:#111;
+border-radius:10px;
+margin-top:20px;
+}
+
 </style>
 </head>
 
 <body>
 
-<header>
-<div><strong>🍕 PizzaHub Pro</strong></div>
+<div id="loader">Loading PizzaHub Ultra...</div>
+
 <nav>
-<button onclick="showSection('home')">Home</button>
-<button onclick="showSection('menu')">Menu</button>
-<button onclick="showSection('cart')">Cart</button>
-<button onclick="showSection('orders')">Orders</button>
-<button onclick="toggleDark()">🌙</button>
-<button onclick="logout()">Logout</button>
+<h2>PizzaHub Ultra</h2>
+<div>
+<a onclick="show('home')">Home</a>
+<a onclick="show('menu')">Menu</a>
+<a onclick="show('cart')">Cart <span id="cartCount">0</span></a>
+<a onclick="show('orders')">Orders</a>
+<a onclick="show('admin')">Admin</a>
+</div>
 </nav>
-</header>
 
+<!-- ================== HOME ================== -->
 <div id="home" class="section active">
-<h2>Welcome to PizzaHub</h2>
-<p>Order your favorite pizza instantly.</p>
+<h1>Luxury Pizza Experience</h1>
+<p>Premium. Fast. Elite.</p>
 </div>
 
-<div id="login" class="section">
-<h2>Login</h2>
-<input id="loginUser" placeholder="Username">
-<input id="loginPass" type="password" placeholder="Password">
-<button class="primary" onclick="login()">Login</button>
-</div>
-
+<!-- ================== MENU ================== -->
 <div id="menu" class="section">
 <h2>Menu</h2>
-<input id="search" placeholder="Search..." onkeyup="searchPizza()">
-<div class="flex" id="menuItems"></div>
+<div id="menuList" class="grid"></div>
 </div>
 
+<!-- ================== CART ================== -->
 <div id="cart" class="section">
 <h2>Your Cart</h2>
 <div id="cartItems"></div>
-<h3>Total: ₹<span id="total">0</span></h3>
-<button class="primary" onclick="checkout()">Checkout</button>
+<h3>Total ₹<span id="cartTotal">0</span></h3>
+<button onclick="openPayment()">Proceed to Payment</button>
 </div>
 
-<div id="checkout" class="section">
-<h2>Checkout</h2>
-<input id="address" placeholder="Delivery Address">
-<select id="payment">
-<option>Cash on Delivery</option>
-<option>Card (Simulated)</option>
-</select>
-<button class="primary" onclick="placeOrder()">Place Order</button>
-</div>
-
-<div id="tracking" class="section">
-<h2>Order Tracking</h2>
-<p id="orderId"></p>
-<div class="progress">
-<div class="progress-bar" id="progressBar"></div>
-</div>
-<p id="statusText"></p>
-</div>
-
+<!-- ================== ORDERS ================== -->
 <div id="orders" class="section">
-<h2>Order History</h2>
-<div id="orderHistory"></div>
+<h2>Orders</h2>
+<div id="orderList"></div>
+
+<div class="card">
+<h3>Live Tracking</h3>
+<p id="trackStatus"></p>
+<div class="progress"><div id="progressBar"></div></div>
+</div>
 </div>
 
-<div class="toast" id="toast"></div>
+<!-- ================== ADMIN ================== -->
+<div id="admin" class="section">
+<h2>Admin Dashboard</h2>
+<p>Total Revenue: ₹<span id="revenue">0</span></p>
+<canvas id="chart" width="400" height="200"></canvas>
+</div>
+
+<!-- ================== PAYMENT MODAL ================== -->
+<div class="modal" id="paymentModal">
+<div class="modal-content">
+<h3>Fake Payment Gateway</h3>
+<input placeholder="Card Number"><br><br>
+<button onclick="confirmPayment()">Pay Now</button>
+<button onclick="closePayment()">Cancel</button>
+</div>
+</div>
+
+<div id="toast"></div>
 
 <script>
 
+/* ================= DATABASE ================= */
+
 let pizzas=[
-{name:"Margherita",price:199},
-{name:"Farmhouse",price:299},
-{name:"Peppy Paneer",price:249},
-{name:"Veg Extravaganza",price:349}
+{id:1,name:"Truffle Margherita",price:399,img:"https://images.unsplash.com/photo-1542281286-9e0a16bb7366?w=800"},
+{id:2,name:"Pepperoni Supreme",price:499,img:"https://images.unsplash.com/photo-1601924638867-3ec3f3c5c1e0?w=800"}
 ];
 
-let cart=JSON.parse(localStorage.getItem("cart"))||[];
-let orders=JSON.parse(localStorage.getItem("orders"))||[];
-let currentUser=localStorage.getItem("user");
+let cart=[];
+let orders=[];
 
-if(!currentUser){
-showSection("login");
-}else{
-showSection("home");
-}
+/* ================= NAVIGATION ================= */
 
-function showSection(id){
+function show(id){
 document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
-renderMenu();
-renderCart();
-renderOrders();
 }
 
-function renderMenu(){
-let container=document.getElementById("menuItems");
+/* ================= MENU ================= */
+
+function loadMenu(){
+let container=document.getElementById("menuList");
 container.innerHTML="";
 pizzas.forEach(p=>{
 container.innerHTML+=`
 <div class="card">
+<img src="${p.img}">
 <h3>${p.name}</h3>
 <p>₹${p.price}</p>
-<button class="primary" onclick="addToCart('${p.name}',${p.price})">Add</button>
+<button onclick="addCart(${p.id})">Add to Cart</button>
 </div>`;
 });
 }
 
-function searchPizza(){
-let input=document.getElementById("search").value.toLowerCase();
-document.querySelectorAll("#menuItems .card").forEach(card=>{
-let name=card.querySelector("h3").innerText.toLowerCase();
-card.style.display=name.includes(input)?"block":"none";
-});
+function addCart(id){
+let item=pizzas.find(p=>p.id==id);
+cart.push(item);
+updateCart();
+toast("Added to cart");
 }
 
-function addToCart(name,price){
-let item=cart.find(i=>i.name===name);
-if(item){item.qty++;}
-else{cart.push({name,price,qty:1});}
-localStorage.setItem("cart",JSON.stringify(cart));
-renderCart();
-showToast("Added to cart");
-}
+/* ================= CART ================= */
 
-function renderCart(){
+function updateCart(){
 let container=document.getElementById("cartItems");
 container.innerHTML="";
 let total=0;
-cart.forEach((item,i)=>{
-total+=item.price*item.qty;
-container.innerHTML+=`
-<div class="card">
-${item.name} x ${item.qty}
-<button onclick="changeQty(${i},1)">+</button>
-<button onclick="changeQty(${i},-1)">-</button>
-<button onclick="removeItem(${i})">Remove</button>
-</div>`;
+cart.forEach(c=>{
+total+=c.price;
+container.innerHTML+=`<div class="card">${c.name} - ₹${c.price}</div>`;
 });
-document.getElementById("total").innerText=total;
+document.getElementById("cartTotal").innerText=total;
+document.getElementById("cartCount").innerText=cart.length;
 }
 
-function changeQty(i,change){
-cart[i].qty+=change;
-if(cart[i].qty<=0)cart.splice(i,1);
-localStorage.setItem("cart",JSON.stringify(cart));
-renderCart();
+function openPayment(){
+if(cart.length==0){toast("Cart Empty");return;}
+document.getElementById("paymentModal").style.display="flex";
 }
 
-function removeItem(i){
-cart.splice(i,1);
-localStorage.setItem("cart",JSON.stringify(cart));
-renderCart();
+function closePayment(){
+document.getElementById("paymentModal").style.display="none";
 }
 
-function checkout(){
-if(cart.length===0){showToast("Cart empty");return;}
-showSection("checkout");
-}
-
-function placeOrder(){
-let address=document.getElementById("address").value;
-if(address.length<5){showToast("Enter valid address");return;}
-
-let id="ORD"+Date.now();
-orders.push({id,total:document.getElementById("total").innerText});
-localStorage.setItem("orders",JSON.stringify(orders));
+function confirmPayment(){
+let total=document.getElementById("cartTotal").innerText;
+orders.push({id:Date.now(),total:total});
 cart=[];
-localStorage.setItem("cart","[]");
-
-showSection("tracking");
-document.getElementById("orderId").innerText="Order ID: "+id;
+updateCart();
+closePayment();
+toast("Payment Successful");
 simulateTracking();
+updateRevenue();
 }
+
+/* ================= TRACKING ================= */
 
 function simulateTracking(){
+let steps=["Preparing","Baking","Out for Delivery","Delivered"];
 let progress=0;
-let statuses=["Order Placed","Preparing","Baking","Out for Delivery","Delivered"];
-let i=0;
+let bar=document.getElementById("progressBar");
+
 let interval=setInterval(()=>{
+bar.style.width=(progress+25)+"%";
+document.getElementById("trackStatus").innerText=steps[progress/25];
 progress+=25;
-document.getElementById("progressBar").style.width=progress+"%";
-document.getElementById("statusText").innerText=statuses[i];
-i++;
-if(progress>=100)clearInterval(interval);
-},2000);
+if(progress>=100) clearInterval(interval);
+},1500);
 }
 
-function renderOrders(){
-let container=document.getElementById("orderHistory");
-container.innerHTML="";
-orders.forEach(o=>{
-container.innerHTML+=`<div class="card">${o.id} - ₹${o.total}</div>`;
-});
-}
+/* ================= TOAST ================= */
 
-function login(){
-let user=document.getElementById("loginUser").value;
-let pass=document.getElementById("loginPass").value;
-if(user && pass){
-localStorage.setItem("user",user);
-currentUser=user;
-showSection("home");
-}else{showToast("Enter credentials");}
-}
-
-function logout(){
-localStorage.clear();
-location.reload();
-}
-
-function toggleDark(){
-document.body.classList.toggle("dark");
-}
-
-function showToast(msg){
+function toast(msg){
 let t=document.getElementById("toast");
 t.innerText=msg;
 t.style.display="block";
-setTimeout(()=>t.style.display="none",2000);
+setTimeout(()=>{t.style.display="none";},2000);
 }
+
+/* ================= ADMIN ANALYTICS ================= */
+
+function updateRevenue(){
+let revenue=0;
+orders.forEach(o=>revenue+=parseInt(o.total));
+document.getElementById("revenue").innerText=revenue;
+drawChart();
+}
+
+function drawChart(){
+let canvas=document.getElementById("chart");
+let ctx=canvas.getContext("2d");
+ctx.clearRect(0,0,400,200);
+
+orders.forEach((o,i)=>{
+ctx.fillStyle="#d4af37";
+ctx.fillRect(i*50+20,200-o.total/5,30,o.total/5);
+});
+}
+
+loadMenu();
+updateCart();
 
 </script>
 
