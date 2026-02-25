@@ -6,112 +6,46 @@
 <title>PizzaHub Ultra</title>
 
 <style>
-
-/* ================== PREMIUM DESIGN SYSTEM ================== */
-
 :root{
 --bg:linear-gradient(135deg,#0f0f14,#1c1c25);
---glass:rgba(255,255,255,0.05);
+--glass:rgba(255,255,255,0.06);
 --gold:#d4af37;
 --text:#f5f5f5;
 }
 
 body{
 margin:0;
-font-family:Segoe UI, sans-serif;
+font-family:Segoe UI,sans-serif;
 background:var(--bg);
 color:var(--text);
-overflow-x:hidden;
 }
-
-/* ================== LOADER ================== */
-
-#loader{
-position:fixed;
-width:100%;
-height:100vh;
-background:#000;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:9999;
-font-size:28px;
-color:var(--gold);
-animation:fadeOut 2s forwards 2s;
-}
-
-@keyframes fadeOut{
-to{opacity:0;visibility:hidden;}
-}
-
-/* ================== NAV ================== */
 
 nav{
-backdrop-filter:blur(10px);
 background:var(--glass);
-padding:15px 40px;
+backdrop-filter:blur(10px);
+padding:15px 30px;
 display:flex;
 justify-content:space-between;
 align-items:center;
 position:sticky;
 top:0;
-z-index:1000;
 }
 
-nav h2{color:var(--gold);}
+nav h2{color:var(--gold);margin:0;}
 
 nav a{
 margin-left:20px;
 cursor:pointer;
-transition:0.3s;
 }
 
 nav a:hover{color:var(--gold);}
 
-/* ================== SECTIONS ================== */
-
 .section{
 display:none;
-padding:40px 60px;
-animation:fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(10px);}
-to{opacity:1;transform:translateY(0);}
+padding:40px;
 }
 
 .active{display:block;}
-
-/* ================== CARDS ================== */
-
-.card{
-background:var(--glass);
-backdrop-filter:blur(15px);
-padding:20px;
-border-radius:15px;
-margin:15px 0;
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-5px) scale(1.02);
-}
-
-/* ================== BUTTON ================== */
-
-button{
-background:var(--gold);
-border:none;
-padding:8px 14px;
-cursor:pointer;
-font-weight:bold;
-transition:0.3s;
-}
-
-button:hover{transform:scale(1.05);}
-
-/* ================== GRID ================== */
 
 .grid{
 display:grid;
@@ -119,31 +53,43 @@ grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:20px;
 }
 
+.card{
+background:var(--glass);
+padding:15px;
+border-radius:15px;
+transition:0.3s;
+}
+
+.card:hover{transform:scale(1.03);}
+
 img{
 width:100%;
-border-radius:12px;
+height:180px;
+object-fit:cover;
+border-radius:10px;
 }
 
-/* ================== TOAST ================== */
-
-#toast{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#111;
-padding:15px;
-border-left:4px solid var(--gold);
-display:none;
+button{
+background:var(--gold);
+border:none;
+padding:6px 12px;
+cursor:pointer;
+margin-top:5px;
 }
 
-/* ================== MODAL ================== */
+button:hover{transform:scale(1.05);}
+
+#cartCount{
+background:red;
+padding:3px 7px;
+border-radius:50%;
+font-size:12px;
+}
 
 .modal{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100vh;
+top:0;left:0;
+width:100%;height:100vh;
 background:rgba(0,0,0,0.8);
 display:none;
 align-items:center;
@@ -152,50 +98,21 @@ justify-content:center;
 
 .modal-content{
 background:#1e1e28;
-padding:30px;
-border-radius:15px;
+padding:20px;
+border-radius:10px;
 width:300px;
 }
 
-/* ================== PROGRESS ================== */
-
-.progress{
-height:10px;
-background:#333;
-margin-top:10px;
-border-radius:10px;
-}
-
-.progress div{
-height:10px;
-width:0;
-background:var(--gold);
-border-radius:10px;
-transition:1s;
-}
-
-/* ================== CART BADGE ================== */
-
-#cartCount{
-background:red;
-padding:3px 7px;
-border-radius:50%;
-font-size:12px;
-margin-left:5px;
-}
-
-canvas{
+footer{
+text-align:center;
+padding:20px;
 background:#111;
-border-radius:10px;
-margin-top:20px;
+margin-top:30px;
 }
-
 </style>
 </head>
 
 <body>
-
-<div id="loader">Loading PizzaHub Ultra...</div>
 
 <nav>
 <h2>PizzaHub Ultra</h2>
@@ -204,23 +121,21 @@ margin-top:20px;
 <a onclick="show('menu')">Menu</a>
 <a onclick="show('cart')">Cart <span id="cartCount">0</span></a>
 <a onclick="show('orders')">Orders</a>
-<a onclick="show('admin')">Admin</a>
+<a onclick="showAdmin()">Admin</a>
 </div>
 </nav>
 
-<!-- ================== HOME ================== -->
 <div id="home" class="section active">
-<h1>Luxury Pizza Experience</h1>
-<p>Premium. Fast. Elite.</p>
+<h1>Welcome to PizzaHub Ultra</h1>
+<p>Your one-stop destination for premium pizzas and refreshing drinks.</p>
+<p>Order online and enjoy fast delivery at your doorstep.</p>
 </div>
 
-<!-- ================== MENU ================== -->
 <div id="menu" class="section">
 <h2>Menu</h2>
 <div id="menuList" class="grid"></div>
 </div>
 
-<!-- ================== CART ================== -->
 <div id="cart" class="section">
 <h2>Your Cart</h2>
 <div id="cartItems"></div>
@@ -228,95 +143,160 @@ margin-top:20px;
 <button onclick="openPayment()">Proceed to Payment</button>
 </div>
 
-<!-- ================== ORDERS ================== -->
 <div id="orders" class="section">
-<h2>Orders</h2>
+<h2>Order History</h2>
 <div id="orderList"></div>
-
-<div class="card">
-<h3>Live Tracking</h3>
-<p id="trackStatus"></p>
-<div class="progress"><div id="progressBar"></div></div>
-</div>
 </div>
 
-<!-- ================== ADMIN ================== -->
 <div id="admin" class="section">
 <h2>Admin Dashboard</h2>
 <p>Total Revenue: ₹<span id="revenue">0</span></p>
 <canvas id="chart" width="400" height="200"></canvas>
 </div>
 
-<!-- ================== PAYMENT MODAL ================== -->
 <div class="modal" id="paymentModal">
 <div class="modal-content">
-<h3>Fake Payment Gateway</h3>
-<input placeholder="Card Number"><br><br>
+<h3>Payment Gateway</h3>
+<input id="cardInput" placeholder="Enter Card Number" style="width:100%;padding:5px"><br><br>
 <button onclick="confirmPayment()">Pay Now</button>
 <button onclick="closePayment()">Cancel</button>
 </div>
 </div>
 
-<div id="toast"></div>
+<footer>
+© 2026 PizzaHub Ultra | Developed using HTML, CSS & JavaScript
+</footer>
 
 <script>
 
-/* ================= DATABASE ================= */
+// ================= DATA =================
 
 let pizzas=[
-{id:1,name:"Truffle Margherita",price:399,img:"https://images.unsplash.com/photo-1542281286-9e0a16bb7366?w=800"},
-{id:2,name:"Pepperoni Supreme",price:499,img:"https://images.unsplash.com/photo-1601924638867-3ec3f3c5c1e0?w=800"}
+{id:1,name:"Truffle Margherita",price:399,desc:"Classic Italian pizza with basil.",img:"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80"},
+{id:2,name:"Pepperoni Supreme",price:499,desc:"Loaded with pepperoni & cheese.",img:"https://images.unsplash.com/photo-1601924582975-7aa6b4f6b5f1?auto=format&fit=crop&w=800&q=80"},
+{id:3,name:"Farmhouse Delight",price:449,desc:"Fresh vegetables & mozzarella.",img:"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=80"},
+{id:4,name:"BBQ Chicken",price:549,desc:"Smoky BBQ chicken topping.",img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80"},
+{id:5,name:"Four Cheese",price:529,desc:"Mozzarella, cheddar & parmesan.",img:"https://images.unsplash.com/photo-1548365328-9f547fb0953a?auto=format&fit=crop&w=800&q=80"},
+{id:6,name:"Mexican Wave",price:469,desc:"Spicy jalapeno & olives.",img:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80"},
+{id:7,name:"Paneer Tikka",price:459,desc:"Indian style paneer topping.",img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80"},
+{id:8,name:"Cheese Burst",price:579,desc:"Extra cheese stuffed crust.",img:"https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=800&q=80"},
+{id:9,name:"Spicy Italian",price:519,desc:"Italian herbs & salami.",img:"https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?auto=format&fit=crop&w=800&q=80"},
+{id:10,name:"Veggie Paradise",price:429,desc:"Garden fresh vegetables.",img:"https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&w=800&q=80"}
 ];
 
-let cart=[];
-let orders=[];
+let drinks=[
+{id:101,name:"Coca Cola",price:99,desc:"Refreshing cold drink.",img:"https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=800&q=80"},
+{id:102,name:"Pepsi",price:99,desc:"Classic soft drink.",img:"https://images.unsplash.com/photo-1622483767028-3f66f32aefdb?auto=format&fit=crop&w=800&q=80"},
+{id:103,name:"Orange Juice",price:129,desc:"Fresh orange juice.",img:"https://images.unsplash.com/photo-1571689936114-b7e1f6c7b5c3?auto=format&fit=crop&w=800&q=80"},
+{id:104,name:"Cold Coffee",price:149,desc:"Iced coffee with cream.",img:"https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80"},
+{id:105,name:"Mineral Water",price:49,desc:"Pure bottled water.",img:"https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=800&q=80"}
+];
 
-/* ================= NAVIGATION ================= */
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+let orders=JSON.parse(localStorage.getItem("orders"))||[];
+
+// ================= NAVIGATION =================
 
 function show(id){
 document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
 }
 
-/* ================= MENU ================= */
+// ================= ADMIN LOGIN =================
+
+function showAdmin(){
+let pass=prompt("Enter Admin Password:");
+if(pass==="admin123"){show("admin");updateRevenue();}
+else alert("Access Denied");
+}
+
+// ================= LOAD MENU =================
 
 function loadMenu(){
 let container=document.getElementById("menuList");
-container.innerHTML="";
-pizzas.forEach(p=>{
+container.innerHTML="<h2 style='grid-column:1/-1;'>Pizzas</h2>";
+
+pizzas.forEach(item=>{
 container.innerHTML+=`
 <div class="card">
-<img src="${p.img}">
-<h3>${p.name}</h3>
-<p>₹${p.price}</p>
-<button onclick="addCart(${p.id})">Add to Cart</button>
+<img src="${item.img}">
+<h3>${item.name}</h3>
+<p>${item.desc}</p>
+<p><b>₹${item.price}</b></p>
+<button onclick="addCart(${item.id})">Add to Cart</button>
+</div>`;
+});
+
+container.innerHTML+="<h2 style='grid-column:1/-1;margin-top:20px;'>Drinks</h2>";
+
+drinks.forEach(item=>{
+container.innerHTML+=`
+<div class="card">
+<img src="${item.img}">
+<h3>${item.name}</h3>
+<p>${item.desc}</p>
+<p><b>₹${item.price}</b></p>
+<button onclick="addCart(${item.id})">Add to Cart</button>
 </div>`;
 });
 }
 
-function addCart(id){
-let item=pizzas.find(p=>p.id==id);
-cart.push(item);
-updateCart();
-toast("Added to cart");
-}
+// ================= CART =================
 
-/* ================= CART ================= */
+function addCart(id){
+let item=[...pizzas,...drinks].find(p=>p.id==id);
+let existing=cart.find(c=>c.id==id);
+
+if(existing){existing.qty++;}
+else{cart.push({...item,qty:1});}
+
+saveCart();
+}
 
 function updateCart(){
 let container=document.getElementById("cartItems");
 container.innerHTML="";
 let total=0;
-cart.forEach(c=>{
-total+=c.price;
-container.innerHTML+=`<div class="card">${c.name} - ₹${c.price}</div>`;
+let count=0;
+
+cart.forEach((c,i)=>{
+total+=c.price*c.qty;
+count+=c.qty;
+
+container.innerHTML+=`
+<div class="card">
+${c.name} (x${c.qty}) - ₹${c.price*c.qty}
+<br>
+<button onclick="changeQty(${i},1)">+</button>
+<button onclick="changeQty(${i},-1)">-</button>
+<button onclick="removeItem(${i})">Remove</button>
+</div>`;
 });
+
 document.getElementById("cartTotal").innerText=total;
-document.getElementById("cartCount").innerText=cart.length;
+document.getElementById("cartCount").innerText=count;
 }
 
+function changeQty(i,val){
+cart[i].qty+=val;
+if(cart[i].qty<=0) cart.splice(i,1);
+saveCart();
+}
+
+function removeItem(i){
+cart.splice(i,1);
+saveCart();
+}
+
+function saveCart(){
+localStorage.setItem("cart",JSON.stringify(cart));
+updateCart();
+}
+
+// ================= PAYMENT =================
+
 function openPayment(){
-if(cart.length==0){toast("Cart Empty");return;}
+if(cart.length==0){alert("Cart Empty");return;}
 document.getElementById("paymentModal").style.display="flex";
 }
 
@@ -325,45 +305,47 @@ document.getElementById("paymentModal").style.display="none";
 }
 
 function confirmPayment(){
-let total=document.getElementById("cartTotal").innerText;
+let card=document.getElementById("cardInput").value;
+
+if(card.length<8){
+alert("Enter valid card number");
+return;
+}
+
+let total=+document.getElementById("cartTotal").innerText;
+
 orders.push({id:Date.now(),total:total});
+localStorage.setItem("orders",JSON.stringify(orders));
+
 cart=[];
-updateCart();
+saveCart();
 closePayment();
-toast("Payment Successful");
-simulateTracking();
+loadOrders();
 updateRevenue();
+
+alert("Payment Successful!");
 }
 
-/* ================= TRACKING ================= */
+// ================= ORDERS =================
 
-function simulateTracking(){
-let steps=["Preparing","Baking","Out for Delivery","Delivered"];
-let progress=0;
-let bar=document.getElementById("progressBar");
+function loadOrders(){
+let container=document.getElementById("orderList");
+container.innerHTML="";
 
-let interval=setInterval(()=>{
-bar.style.width=(progress+25)+"%";
-document.getElementById("trackStatus").innerText=steps[progress/25];
-progress+=25;
-if(progress>=100) clearInterval(interval);
-},1500);
+orders.forEach(o=>{
+container.innerHTML+=`
+<div class="card">
+Order ID: ${o.id}<br>
+Total: ₹${o.total}
+</div>`;
+});
 }
 
-/* ================= TOAST ================= */
-
-function toast(msg){
-let t=document.getElementById("toast");
-t.innerText=msg;
-t.style.display="block";
-setTimeout(()=>{t.style.display="none";},2000);
-}
-
-/* ================= ADMIN ANALYTICS ================= */
+// ================= ADMIN REVENUE =================
 
 function updateRevenue(){
 let revenue=0;
-orders.forEach(o=>revenue+=parseInt(o.total));
+orders.forEach(o=>revenue+=o.total);
 document.getElementById("revenue").innerText=revenue;
 drawChart();
 }
@@ -375,12 +357,15 @@ ctx.clearRect(0,0,400,200);
 
 orders.forEach((o,i)=>{
 ctx.fillStyle="#d4af37";
-ctx.fillRect(i*50+20,200-o.total/5,30,o.total/5);
+ctx.fillRect(i*40+20,200-o.total/5,25,o.total/5);
 });
 }
 
+// ================= INIT =================
+
 loadMenu();
 updateCart();
+loadOrders();
 
 </script>
 
