@@ -3,576 +3,427 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UrbanSlice ULTRA Platinum</title>
+<title>UrbanSlice ULTRA | Business Edition</title>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
 --primary:#00ffcc;
 --bg:#0a0a0a;
---card:#151515;
---text:#ffffff;
+--card:#141414;
+--text:#fff;
+--muted:#999;
 --danger:#ff3e3e;
---warning:#ffcc00;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif}
 body{background:var(--bg);color:var(--text);overflow-x:hidden}
 
 /* NAV */
 nav{
 position:fixed;top:0;width:100%;z-index:1000;
-background:rgba(0,0,0,.9);
-padding:1rem 6%;
-display:flex;justify-content:space-between;align-items:center;
+background:rgba(10,10,10,.9);
+backdrop-filter:blur(10px);
+padding:20px 0;
 border-bottom:1px solid #222;
 }
-
-.logo{
-font-size:1.6rem;font-weight:900;color:var(--primary);
-cursor:pointer;
+.container{max-width:1200px;margin:auto;padding:0 20px}
+.nav-content{display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;font-size:1.5rem;color:var(--primary);cursor:pointer}
+.nav-tools{display:flex;gap:20px}
+.icon-btn{font-size:1.4rem;cursor:pointer;position:relative}
+.badge{
+position:absolute;top:-6px;right:-10px;
+background:var(--danger);
+font-size:10px;padding:2px 6px;border-radius:20px
 }
 
-.nav-icons i{
-font-size:1.4rem;margin-left:18px;cursor:pointer;
-}
+/* HERO */
+.hero{padding:150px 0 50px;text-align:center}
+.hero h1{font-size:3rem;margin-bottom:10px}
 
-/* LAYOUT */
-section{padding:120px 6% 40px}
+/* GRID */
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
 gap:25px;
+padding-bottom:60px;
 }
-
 .card{
 background:var(--card);
-border-radius:16px;
-overflow:hidden;
-border:1px solid #222;
+border-radius:20px;
+padding:15px;
 transition:.3s;
+border:1px solid #1f1f1f;
 position:relative;
 }
-
 .card:hover{
-transform:translateY(-6px);
+transform:translateY(-8px);
 border-color:var(--primary);
 }
-
 .card img{
 width:100%;
-height:190px;
+height:200px;
 object-fit:cover;
+border-radius:15px;
 }
-
-.card-body{padding:18px}
-
-.heart{
-position:absolute;
-top:15px;
-right:15px;
-font-size:1.4rem;
-cursor:pointer;
-color:#555;
-}
-
-.heart.active{color:var(--danger)}
-
+.card h3{margin:10px 0 5px}
+.card p{color:var(--muted);font-size:14px}
+.price{font-weight:800;margin-top:8px}
 .btn{
 background:var(--primary);
 color:#000;
 border:none;
-padding:10px 16px;
-border-radius:8px;
-font-weight:700;
-cursor:pointer;
-margin-top:10px;
+padding:10px;
 width:100%;
+border-radius:10px;
+cursor:pointer;
+font-weight:700;
+margin-top:10px;
 }
+.btn:disabled{opacity:.5;cursor:not-allowed}
 
-.btn-danger{
-background:var(--danger);
-color:#fff;
-}
-
-.btn-ghost{
-background:transparent;
-border:1px solid var(--primary);
-color:var(--primary);
-}
-
-/* PANELS */
-.panel{
-position:fixed;
-top:0;
-right:-100%;
-width:420px;
-height:100%;
-background:#0c0c0c;
-z-index:2000;
-padding:30px;
-transition:.5s;
-overflow-y:auto;
-border-left:1px solid var(--primary);
-}
-
-.panel.active{right:0}
-
-.close{
+.heart{
 position:absolute;
-top:20px;
-right:20px;
-font-size:1.5rem;
+top:20px;right:20px;
+font-size:1.3rem;
 cursor:pointer;
+color:#555;
 }
+.heart.active{color:var(--danger)}
 
-/* CART ITEMS */
-.cart-item{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:10px;
-background:#1a1a1a;
-padding:10px;
-border-radius:8px;
-}
-
-.qty-controls button{
-background:#222;
-border:none;
-color:#fff;
-padding:4px 8px;
-margin:0 4px;
-cursor:pointer;
-}
-
-/* STATUS */
-.status{
-padding:4px 8px;
-border-radius:6px;
-font-size:12px;
-}
-
-.preparing{background:#333}
-.baking{background:#555}
-.delivery{background:#0066ff}
-.delivered{background:#00aa44}
-.cancelled{background:var(--danger)}
-
-/* ADMIN MODAL */
-#adminLogin{
+/* DRAWER */
+.drawer{
 position:fixed;
-inset:0;
-background:rgba(0,0,0,.95);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:4000;
-flex-direction:column;
-}
-
-#adminLogin input{
-padding:10px;
-width:250px;
-margin-bottom:10px;
-border-radius:6px;
-border:1px solid #333;
-background:#111;
-color:#fff;
-}
-
-/* DASHBOARD */
-#adminPanel{
-position:fixed;
-inset:0;
-background:#0d0d0d;
-z-index:5000;
-display:none;
+top:0;right:0;
+width:420px;height:100vh;
+background:#0f0f0f;
+transform:translateX(100%);
+transition:.4s;
+padding:30px;
+z-index:2000;
 overflow:auto;
-padding:40px;
 }
+.drawer.active{transform:translateX(0)}
+.close{cursor:pointer;font-size:1.5rem}
 
-.admin-section{
-margin-bottom:40px;
-background:#111;
-padding:20px;
-border-radius:12px;
+/* ADMIN */
+#adminLogin{
+position:fixed;inset:0;background:#000e;
+display:none;justify-content:center;align-items:center;z-index:4000;flex-direction:column
 }
+#adminPanel{
+position:fixed;inset:0;background:#0c0c0c;
+display:none;z-index:5000;overflow:auto;padding:40px
+}
+.admin-box{background:#111;padding:20px;border-radius:10px;margin-bottom:20px}
 
 /* TOAST */
 #toast{
-position:fixed;
-bottom:30px;
-right:30px;
-background:var(--primary);
-color:#000;
-padding:12px 22px;
-border-radius:8px;
-transform:translateY(150%);
-transition:.4s;
-z-index:9999;
+position:fixed;bottom:30px;right:30px;
+background:#fff;color:#000;padding:12px 20px;
+border-radius:10px;transform:translateY(150%);
+transition:.3s;z-index:9999
 }
-
 #toast.show{transform:translateY(0)}
 </style>
 </head>
 <body>
 
 <nav>
-<div class="logo" onclick="logoClick()">URBANSLICE</div>
-<div class="nav-icons">
-<i class="ri-heart-line" onclick="openPanel('wishPanel')"></i>
-<i class="ri-history-line" onclick="openPanel('historyPanel')"></i>
-<i class="ri-shopping-bag-fill" onclick="openPanel('cartPanel')"></i>
+<div class="container nav-content">
+<div class="logo" onclick="Actions.logoClick()">URBANSLICE</div>
+<div class="nav-tools">
+<div class="icon-btn" onclick="UI.openDrawer('wishDrawer')">
+<i class="ri-heart-line"></i>
+</div>
+<div class="icon-btn" onclick="UI.openDrawer('historyDrawer')">
+<i class="ri-history-line"></i>
+</div>
+<div class="icon-btn" onclick="UI.openDrawer('cartDrawer')">
+<i class="ri-shopping-bag-3-line"></i>
+<span class="badge" id="cartBadge">0</span>
+</div>
+</div>
 </div>
 </nav>
 
-<section>
-<div class="grid" id="menuGrid"></div>
+<section class="container hero">
+<h1>Premium Cravings</h1>
+<p style="color:var(--muted)">Crafted with passion, delivered with speed.</p>
 </section>
 
-<!-- CART PANEL -->
-<div class="panel" id="cartPanel">
-<span class="close" onclick="closePanels()">&times;</span>
-<h2>Your Bag</h2>
+<section class="container">
+<div class="grid" id="productGrid"></div>
+</section>
+
+<!-- CART -->
+<div class="drawer" id="cartDrawer">
+<h2>Cart</h2>
 <div id="cartItems"></div>
-<h3 style="margin-top:20px">Total: ₹<span id="totalVal">0</span></h3>
-<button class="btn" onclick="placeOrder()">PLACE ORDER</button>
+<h3>Total: ₹<span id="cartTotal">0</span></h3>
+<button class="btn" id="checkoutBtn">CHECKOUT</button>
 </div>
 
 <!-- HISTORY -->
-<div class="panel" id="historyPanel">
-<span class="close" onclick="closePanels()">&times;</span>
+<div class="drawer" id="historyDrawer">
 <h2>Orders</h2>
-<div id="orderLogs"></div>
+<div id="orderHistory"></div>
 </div>
 
 <!-- WISHLIST -->
-<div class="panel" id="wishPanel">
-<span class="close" onclick="closePanels()">&times;</span>
-<h2>Favorites</h2>
-<div id="wishList"></div>
+<div class="drawer" id="wishDrawer">
+<h2>Wishlist</h2>
+<div id="wishItems"></div>
 </div>
 
 <!-- ADMIN LOGIN -->
 <div id="adminLogin">
 <h2>Admin Access</h2>
 <input type="password" id="adminPass" placeholder="Enter password">
-<button class="btn" style="width:250px" onclick="checkAdmin()">LOGIN</button>
+<button class="btn" onclick="Actions.checkAdmin()">LOGIN</button>
 </div>
 
-<!-- ADMIN DASHBOARD -->
+<!-- ADMIN PANEL -->
 <div id="adminPanel">
-<button class="btn-danger" onclick="closeAdmin()">EXIT ADMIN</button>
+<button class="btn" onclick="UI.closeAdmin()">EXIT ADMIN</button>
 
-<div class="admin-section">
+<div class="admin-box">
 <h3>Analytics</h3>
 <p>Total Revenue: ₹<span id="adminRevenue">0</span></p>
 <p>Total Orders: <span id="adminOrders">0</span></p>
-<p>Average Rating: <span id="adminRating">0</span></p>
 <canvas id="revenueChart" height="100"></canvas>
 </div>
 
-<div class="admin-section">
+<div class="admin-box">
 <h3>Product Manager</h3>
-<input id="newName" placeholder="Product Name">
+<input id="newName" placeholder="Name">
 <input id="newPrice" type="number" placeholder="Price">
-<input id="newImage" placeholder="Image URL">
-<button class="btn" onclick="addProduct()">ADD PRODUCT</button>
-<div id="productAdminList"></div>
+<input id="newImg" placeholder="Image URL">
+<button class="btn" onclick="Actions.addProduct()">Add</button>
+<div id="adminProducts"></div>
 </div>
 
-<div class="admin-section">
+<div class="admin-box">
 <h3>Orders Manager</h3>
-<div id="adminOrderList"></div>
+<div id="adminOrdersList"></div>
 </div>
 </div>
 
-<div id="toast"></div><script>
-/* ===============================
-   DATA STORAGE SYSTEM
-================================ */
+<div id="toast"></div>
 
-let products = JSON.parse(localStorage.getItem("products")) || [
-{ id:1, name:"Neapolitan Pizza", price:499, img:"https://images.unsplash.com/photo-1574071318508-1cdbad80ad50?w=500", active:true },
-{ id:2, name:"Cheese Burst", price:599, img:"https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500", active:true },
-{ id:3, name:"Texas BBQ Burger", price:250, img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500", active:true }
-];
+<script>
+/* ================= STORE ================= */
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-let orders = JSON.parse(localStorage.getItem("orders")) || [];
-
-function saveAll(){
-localStorage.setItem("products", JSON.stringify(products));
-localStorage.setItem("cart", JSON.stringify(cart));
-localStorage.setItem("wishlist", JSON.stringify(wishlist));
-localStorage.setItem("orders", JSON.stringify(orders));
-}
-
-/* ===============================
-   MENU RENDER
-================================ */
-
-function renderMenu(){
-menuGrid.innerHTML = products.filter(p=>p.active).map(p=>`
-<div class="card">
-<i class="ri-heart-fill heart ${wishlist.includes(p.id)?"active":""}" onclick="toggleWish(${p.id})"></i>
-<img src="${p.img}">
-<div class="card-body">
-<h3>${p.name}</h3>
-<p style="color:var(--primary);font-weight:bold">₹${p.price}</p>
-<button class="btn" onclick="addToCart(${p.id})">ADD TO BAG</button>
-</div>
-</div>
-`).join("");
-}
-
-/* ===============================
-   CART SYSTEM
-================================ */
-
-function addToCart(id){
-let item = cart.find(i=>i.id===id);
-item ? item.qty++ : cart.push({id, qty:1});
-saveAll(); updateCart();
-toast("Added to bag");
-}
-
-function updateCart(){
-let total=0;
-
-cartItems.innerHTML = cart.map(c=>{
-let p = products.find(x=>x.id===c.id);
-total += p.price * c.qty;
-
-return `
-<div class="cart-item">
-<span>${p.name}</span>
-<div class="qty-controls">
-<button onclick="changeQty(${c.id},-1)">-</button>
-${c.qty}
-<button onclick="changeQty(${c.id},1)">+</button>
-<button onclick="removeItem(${c.id})">x</button>
-</div>
-</div>`;
-}).join("");
-
-totalVal.innerText = total;
-saveAll();
-}
-
-function changeQty(id,val){
-let item = cart.find(i=>i.id===id);
-if(!item) return;
-item.qty += val;
-if(item.qty<=0) cart = cart.filter(i=>i.id!==id);
-updateCart();
-}
-
-function removeItem(id){
-cart = cart.filter(i=>i.id!==id);
-updateCart();
-}
-
-/* ===============================
-   ORDER SYSTEM
-================================ */
-
-function generateOrderId(){
-return "ORD-"+Math.random().toString(36).substr(2,5).toUpperCase();
-}
-
-function placeOrder(){
-if(cart.length===0){ toast("Cart empty"); return; }
-
-let order={
-id:generateOrderId(),
-date:new Date().toLocaleString(),
-items:[...cart],
-total:parseInt(totalVal.innerText),
-status:"Preparing",
-rating:0
+const Store={
+products:JSON.parse(localStorage.getItem("us_products"))||[
+{id:1,name:"Truffle Mushroom Pizza",desc:"Black truffle infused cream",price:549,img:"https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600"},
+{id:2,name:"Spicy Pepperoni",desc:"Loaded with spicy salami",price:499,img:"https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600"},
+{id:3,name:"Classic Margherita",desc:"Fresh basil & mozzarella",price:399,img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=600"},
+{id:4,name:"BBQ Chicken Pizza",desc:"Smoky BBQ glazed chicken",price:529,img:"https://images.unsplash.com/photo-1594007654729-407eedc4be65?w=600"},
+{id:5,name:"Veggie Supreme",desc:"Loaded garden vegetables",price:459,img:"https://images.unsplash.com/photo-1548365328-9f547fb0953d?w=600"},
+{id:6,name:"Wagyu Burger",desc:"Premium beef patty",price:349,img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"},
+{id:7,name:"Crispy Zinger Burger",desc:"Crunchy fried chicken",price:299,img:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=600"},
+{id:8,name:"Loaded Nachos",desc:"Cheese & jalapenos",price:249,img:"https://images.unsplash.com/photo-1600891963935-5f63c4d9f7b8?w=600"},
+{id:9,name:"Garlic Breadsticks",desc:"Herb butter brushed",price:199,img:"https://images.unsplash.com/photo-1605478900058-2b74a26b5c7b?w=600"},
+{id:10,name:"Chocolate Lava Cake",desc:"Molten chocolate core",price:179,img:"https://images.unsplash.com/photo-1606312619344-2f73f6b6c74e?w=600"},
+{id:11,name:"Tiramisu Delight",desc:"Italian layered dessert",price:219,img:"https://images.unsplash.com/photo-1600891965050-9c8e2e8e9e3f?w=600"},
+{id:12,name:"Blueberry Cheesecake",desc:"Creamy & rich",price:229,img:"https://images.unsplash.com/photo-1617191519105-d07b98b10de4?w=600"}
+],
+cart:JSON.parse(localStorage.getItem("us_cart"))||[],
+orders:JSON.parse(localStorage.getItem("us_orders"))||[],
+wishlist:JSON.parse(localStorage.getItem("us_wishlist"))||[]
 };
 
-orders.push(order);
-cart=[];
-saveAll();
-updateCart();
-renderOrders();
-startTracking(order.id);
-toast("Order placed!");
+function save(){
+localStorage.setItem("us_products",JSON.stringify(Store.products));
+localStorage.setItem("us_cart",JSON.stringify(Store.cart));
+localStorage.setItem("us_orders",JSON.stringify(Store.orders));
+localStorage.setItem("us_wishlist",JSON.stringify(Store.wishlist));
 }
 
-function startTracking(id){
-let stages=["Preparing","Baking","Out for Delivery","Delivered"];
-let interval=setInterval(()=>{
-let order=orders.find(o=>o.id===id);
-if(!order || order.status==="Delivered" || order.status==="Cancelled"){
-clearInterval(interval);
-return;
-}
-let currentIndex=stages.indexOf(order.status);
-if(currentIndex<stages.length-1){
-order.status=stages[currentIndex+1];
-saveAll();
-renderOrders();
-}
-},4000);
-}
+/* ================= UI ================= */
 
-function renderOrders(){
-orderLogs.innerHTML = orders.slice().reverse().map(o=>{
+const UI={
+init(){
+this.renderProducts();
+this.updateCart();
+this.renderHistory();
+this.renderWishlist();
+},
+
+renderProducts(){
+productGrid.innerHTML=Store.products.map(p=>`
+<div class="card">
+<i class="ri-heart-fill heart ${Store.wishlist.includes(p.id)?"active":""}" onclick="Actions.toggleWish(${p.id})"></i>
+<img src="${p.img}">
+<h3>${p.name}</h3>
+<p>${p.desc}</p>
+<div class="price">₹${p.price}</div>
+<button class="btn" onclick="Actions.addToCart(${p.id})">ADD TO CART</button>
+</div>
+`).join("");
+},
+
+updateCart(){
+let total=0,count=0;
+cartItems.innerHTML=Store.cart.map(i=>{
+let p=Store.products.find(x=>x.id===i.id);
+total+=p.price*i.qty;
+count+=i.qty;
 return `
-<div style="background:#1a1a1a;padding:12px;margin-bottom:10px;border-radius:8px">
-<b>${o.id}</b><br>
-<small>${o.date}</small><br>
-<span class="status ${o.status.toLowerCase().replace(/ /g,'')}">${o.status}</span>
-<br>Total: ₹${o.total}
+<div style="display:flex;justify-content:space-between;margin:10px 0">
+${p.name} x ${i.qty}
+<div>
+<button onclick="Actions.qty(${p.id},-1)">-</button>
+<button onclick="Actions.qty(${p.id},1)">+</button>
+</div>
 </div>`;
 }).join("");
+cartTotal.innerText=total;
+cartBadge.innerText=count;
+checkoutBtn.disabled=Store.cart.length===0;
+save();
+},
 
-updateAdmin();
-}
+renderHistory(){
+orderHistory.innerHTML=Store.orders.slice().reverse().map(o=>`
+<div style="background:#111;padding:10px;margin-bottom:10px;border-radius:8px">
+<b>${o.id}</b><br>
+<small>${o.date}</small><br>
+Status: ${o.status}<br>
+Total: ₹${o.total}
+</div>
+`).join("");
+},
 
-/* ===============================
-   WISHLIST
-================================ */
-
-function toggleWish(id){
-wishlist.includes(id) ? wishlist=wishlist.filter(x=>x!==id) : wishlist.push(id);
-saveAll();
-renderMenu();
-renderWish();
-}
-
-function renderWish(){
-wishList.innerHTML = wishlist.map(id=>{
-let p=products.find(x=>x.id===id);
-return `<div style="padding:6px 0">${p.name}</div>`;
+renderWishlist(){
+wishItems.innerHTML=Store.wishlist.map(id=>{
+let p=Store.products.find(x=>x.id===id);
+return `<div style="margin:8px 0">${p.name}</div>`;
 }).join("");
-}
+},
 
-/* ===============================
-   ADMIN ACCESS (Hidden)
-================================ */
+openDrawer(id){document.getElementById(id).classList.add("active")},
+closeAdmin(){adminPanel.style.display="none"}
+};
 
-let logoClicks=0;
+/* ================= ACTIONS ================= */
 
-function logoClick(){
-logoClicks++;
-setTimeout(()=>logoClicks=0,2000);
-if(logoClicks>=5){
-adminLogin.style.display="flex";
-logoClicks=0;
-}
-}
-
-function checkAdmin(){
+const Actions={
+addToCart(id){
+let item=Store.cart.find(x=>x.id===id);
+item?item.qty++:Store.cart.push({id,qty:1});
+UI.updateCart();toast("Added");
+},
+qty(id,d){
+let item=Store.cart.find(x=>x.id===id);
+item.qty+=d;
+if(item.qty<=0)Store.cart=Store.cart.filter(x=>x.id!==id);
+UI.updateCart();
+},
+checkout(){
+if(!Store.cart.length)return;
+let order={
+id:"ORD-"+Math.random().toString(36).substr(2,5).toUpperCase(),
+date:new Date().toLocaleString(),
+items:[...Store.cart],
+total:cartTotal.innerText,
+status:"Placed"
+};
+Store.orders.push(order);
+Store.cart=[];
+UI.updateCart();
+UI.renderHistory();
+this.track(order.id);
+toast("Order Placed!");
+},
+track(id){
+let stages=["Placed","Preparing","Out for Delivery","Delivered"];
+let interval=setInterval(()=>{
+let o=Store.orders.find(x=>x.id===id);
+let idx=stages.indexOf(o.status);
+if(idx<stages.length-1){
+o.status=stages[idx+1];
+save();
+UI.renderHistory();
+}else clearInterval(interval);
+},4000);
+},
+toggleWish(id){
+Store.wishlist.includes(id)?
+Store.wishlist=Store.wishlist.filter(x=>x!==id):
+Store.wishlist.push(id);
+save();UI.renderProducts();UI.renderWishlist();
+},
+logoClicks:0,
+logoClick(){
+this.logoClicks++;
+setTimeout(()=>this.logoClicks=0,2000);
+if(this.logoClicks>=5)adminLogin.style.display="flex";
+},
+checkAdmin(){
 if(adminPass.value==="shivansh@123"){
 adminLogin.style.display="none";
 adminPanel.style.display="block";
-updateAdmin();
-}else{
-toast("Wrong password");
-}
-}
-
-function closeAdmin(){
-adminPanel.style.display="none";
-}
-
-/* ===============================
-   ADMIN FEATURES
-================================ */
-
-function updateAdmin(){
-adminRevenue.innerText = orders.reduce((a,b)=>a+b.total,0);
-adminOrders.innerText = orders.length;
-let rated = orders.filter(o=>o.rating>0);
-adminRating.innerText = rated.length ? (rated.reduce((a,b)=>a+b.rating,0)/rated.length).toFixed(1) : 0;
-
-renderProductAdmin();
-renderAdminOrders();
+this.updateAdmin();
+}else toast("Wrong Password");
+},
+updateAdmin(){
+adminRevenue.innerText=Store.orders.reduce((a,b)=>a+Number(b.total),0);
+adminOrders.innerText=Store.orders.length;
+adminProducts.innerHTML=Store.products.map(p=>`
+<div style="margin:8px 0">
+${p.name} ₹${p.price}
+<button onclick="Actions.price(${p.id},10)">+10</button>
+<button onclick="Actions.price(${p.id},-10)">-10</button>
+<button onclick="Actions.deleteProduct(${p.id})">Delete</button>
+</div>
+`).join("");
+adminOrdersList.innerHTML=Store.orders.map(o=>`
+<div>${o.id} - ${o.status}
+<button onclick="Actions.force('${o.id}','Delivered')">Deliver</button>
+<button onclick="Actions.force('${o.id}','Cancelled')">Cancel</button>
+</div>
+`).join("");
 drawChart();
+},
+price(id,val){
+let p=Store.products.find(x=>x.id===id);
+p.price+=val;if(p.price<0)p.price=0;
+save();UI.renderProducts();this.updateAdmin();
+},
+deleteProduct(id){
+Store.products=Store.products.filter(p=>p.id!==id);
+save();UI.renderProducts();this.updateAdmin();
+},
+addProduct(){
+let n=newName.value;
+let pr=Number(newPrice.value);
+let im=newImg.value;
+if(!n||!pr||!im)return;
+Store.products.push({id:Date.now(),name:n,desc:"New Product",price:pr,img:im});
+save();UI.renderProducts();this.updateAdmin();
+newName.value="";newPrice.value="";newImg.value="";
+},
+force(id,status){
+let o=Store.orders.find(x=>x.id===id);
+o.status=status;save();UI.renderHistory();this.updateAdmin();
 }
-
-function renderProductAdmin(){
-productAdminList.innerHTML = products.map(p=>`
-<div style="margin-top:10px;background:#1a1a1a;padding:8px;border-radius:6px">
-${p.name} - ₹${p.price}
-<button onclick="editPrice(${p.id},10)">+10</button>
-<button onclick="editPrice(${p.id},-10)">-10</button>
-<button onclick="deleteProduct(${p.id})">Delete</button>
-</div>
-`).join("");
-}
-
-function editPrice(id,val){
-let p=products.find(x=>x.id===id);
-p.price+=val;
-if(p.price<0) p.price=0;
-saveAll();
-renderMenu();
-updateAdmin();
-}
-
-function deleteProduct(id){
-products=products.filter(p=>p.id!==id);
-saveAll();
-renderMenu();
-updateAdmin();
-}
-
-function addProduct(){
-let name=newName.value;
-let price=parseInt(newPrice.value);
-let img=newImage.value;
-if(!name||!price||!img){toast("Fill all fields");return;}
-products.push({id:Date.now(),name,price,img,active:true});
-saveAll();
-renderMenu();
-updateAdmin();
-newName.value="";newPrice.value="";newImage.value="";
-}
-
-function renderAdminOrders(){
-adminOrderList.innerHTML = orders.map(o=>`
-<div style="margin-top:10px;background:#1a1a1a;padding:8px;border-radius:6px">
-${o.id} - ${o.status}
-<button onclick="changeStatus('${o.id}','Cancelled')">Cancel</button>
-<button onclick="changeStatus('${o.id}','Delivered')">Deliver</button>
-</div>
-`).join("");
-}
-
-function changeStatus(id,status){
-let o=orders.find(x=>x.id===id);
-if(o){o.status=status; saveAll(); renderOrders();}
-}
-
-/* ===============================
-   SIMPLE REVENUE CHART
-================================ */
+};
 
 function drawChart(){
-let canvas=document.getElementById("revenueChart");
-let ctx=canvas.getContext("2d");
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-let data=orders.slice(-7).map(o=>o.total);
+let ctx=revenueChart.getContext("2d");
+ctx.clearRect(0,0,400,100);
+let data=Store.orders.slice(-7).map(o=>Number(o.total));
 let max=Math.max(...data,100);
-
-data.forEach((val,i)=>{
-let height=(val/max)*80;
+data.forEach((v,i)=>{
+let h=(v/max)*80;
 ctx.fillStyle="#00ffcc";
-ctx.fillRect(i*40+20,100-height,30,height);
+ctx.fillRect(i*50+20,100-h,30,h);
 });
 }
-
-/* ===============================
-   TOAST
-================================ */
 
 function toast(msg){
 toast.innerText=msg;
@@ -580,11 +431,9 @@ toast.classList.add("show");
 setTimeout(()=>toast.classList.remove("show"),2000);
 }
 
-/* INIT */
-renderMenu();
-updateCart();
-renderOrders();
-renderWish();
+checkoutBtn.onclick=()=>Actions.checkout();
+
+UI.init();
 </script>
 </body>
 </html>
